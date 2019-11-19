@@ -11,7 +11,7 @@ const ZERO_ADDRESS = '0'.repeat(40);
 const OPT_OUT_FEE       = `2${ '0'.repeat(18) }`;
 const SUPPLY            = `3${ '0'.repeat(18) }`;
 const LIQUIDITY_COST    = `5${ '0'.repeat(18) }`;
-const LIQUIDITY_VOLUME  = SUPPLY;
+const LIQUIDITY_VOLUME  = SUPPLY; // LIQUIDITY_VOLUME <= supply
 
 contract('EthereumTaxDodgeball', function (accounts) {
   const DEPLOYER = accounts[0];

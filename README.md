@@ -18,7 +18,7 @@ The tagger must call the following functions in order:
 | **4** | `airdrop` | An airdrop is executed, placing newly forked tokens within the *dominion and control* of taxpayers who held tokens prior to the hard fork.  These tokens already have a market value dependent on the amount of ether deposited by the tagger. |
 | **5** | `removeLiquidity` | The tagger rescinds the previously made offer. |
 
-If the taxpayer is able to call `takeLiquidity` after `addLiquidity` is called and `removeLiquidity` is called, the taxpayer will be granted the tagger's ether.  For this function to work, the taxpayer must first call ERC20 `increaseAllowance` to allow the taxpayer's tokens to be managed according to the contract.
+If the taxpayer is able to grant the main contract an appropriate allowance (ERC20 `increaseAllowance`) and call `takeLiquidity` between the calls to `addLiquidity` and `removeLiquidity`, the taxpayer will complete the trade and keep the staked ether.
 
 ## Opt-out
 
