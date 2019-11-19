@@ -5,10 +5,13 @@ const ERC20Source = artifacts.require('ERC20Source');
 const ERC20HardFork = artifacts.require('ERC20HardFork');
 
 const ZERO_ADDRESS = '0'.repeat(40);
-const ONE_ETHER = `1${ '0'.repeat(18) }`;
+// const ONE_ETHER = `1${ '0'.repeat(18) }`;
 
-const SUPPLY = ONE_ETHER;
-const LIQUIDITY_VOLUME = ONE_ETHER;
+// arbitrary values
+const OPT_OUT_FEE       = `2${ '0'.repeat(18) }`;
+const SUPPLY            = `3${ '0'.repeat(18) }`;
+const LIQUIDITY_COST    = `5${ '0'.repeat(18) }`;
+const LIQUIDITY_VOLUME  = SUPPLY;
 
 contract('EthereumTaxDodgeball', function (accounts) {
   const DEPLOYER = accounts[0];
@@ -19,7 +22,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
   let instance;
 
   beforeEach(async function () {
-    instance = await EthereumTaxDodgeball.new({ from: DEPLOYER });
+    instance = await EthereumTaxDodgeball.new(OPT_OUT_FEE, { from: DEPLOYER });
   });
 
   describe('#deployToken', function () {
@@ -43,7 +46,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
 
     describe('reverts if', function () {
       it('taxpayer has opted out', async function () {
-        await instance.optOut({ from: TAXPAYER, value: ONE_ETHER });
+        await instance.optOut({ from: TAXPAYER, value: OPT_OUT_FEE });
         await truffleAssert.reverts(
           instance.deployToken(SUPPLY, TAXPAYERS, { from: TAGGER }),
           'EthereumTaxDodgeball: taxpayer has opted out'
@@ -97,7 +100,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
     });
 
     it('emits LiquidityAdded event', async function () {
-      let tx = await instance.addLiquidity(hardForkToken.address, LIQUIDITY_VOLUME, { from: TAGGER, value: ONE_ETHER });
+      let tx = await instance.addLiquidity(hardForkToken.address, LIQUIDITY_VOLUME, { from: TAGGER, value: LIQUIDITY_COST });
 
       await truffleAssert.eventEmitted(tx, 'LiquidityAdded', function (e) {
         return !!e.token && !!e.costBasis;
@@ -113,7 +116,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
       let sourceToken = await ERC20Source.at(deployTx.logs[0].args.token);
       let tx = await instance.hardFork('IRSCoin', 'IRS', sourceToken.address, { from: TAGGER });
       hardForkToken = await ERC20HardFork.at(tx.logs[0].args.token);
-      await instance.addLiquidity(hardForkToken.address, LIQUIDITY_VOLUME, { from: TAGGER, value: ONE_ETHER });
+      await instance.addLiquidity(hardForkToken.address, LIQUIDITY_VOLUME, { from: TAGGER, value: LIQUIDITY_COST });
     });
 
     it('affords taxpayer dominion and control of hard-forked tokens', async function () {
@@ -157,7 +160,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
       let sourceToken = await ERC20Source.at(deployTx.logs[0].args.token);
       let tx = await instance.hardFork('IRSCoin', 'IRS', sourceToken.address, { from: TAGGER });
       hardForkToken = await ERC20HardFork.at(tx.logs[0].args.token);
-      await instance.addLiquidity(hardForkToken.address, LIQUIDITY_VOLUME, { from: TAGGER, value: ONE_ETHER });
+      await instance.addLiquidity(hardForkToken.address, LIQUIDITY_VOLUME, { from: TAGGER, value: LIQUIDITY_COST });
       await instance.airdrop(hardForkToken.address, { from: TAGGER });
     });
 
@@ -168,7 +171,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
       let gasCost = tx.receipt.gasUsed * await web3.eth.getGasPrice();
 
       let finalBalance = parseInt(await web3.eth.getBalance(TAGGER));
-      let deltaBalance = parseInt(ONE_ETHER) - gasCost;
+      let deltaBalance = parseInt(LIQUIDITY_COST) - gasCost;
 
       assert.equal(finalBalance, initialBalance + deltaBalance);
     });
@@ -193,7 +196,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
       let sourceToken = await ERC20Source.at(deployTx.logs[0].args.token);
       let tx = await instance.hardFork('IRSCoin', 'IRS', sourceToken.address, { from: TAGGER });
       hardForkToken = await ERC20HardFork.at(tx.logs[0].args.token);
-      await instance.addLiquidity(hardForkToken.address, LIQUIDITY_VOLUME, { from: TAGGER, value: ONE_ETHER });
+      await instance.addLiquidity(hardForkToken.address, LIQUIDITY_VOLUME, { from: TAGGER, value: LIQUIDITY_COST });
       await instance.airdrop(hardForkToken.address, { from: TAGGER });
       await hardForkToken.increaseAllowance(instance.address, await hardForkToken.balanceOf(TAXPAYER), { from: TAXPAYER });
     });
@@ -205,7 +208,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
       let gasCost = tx.receipt.gasUsed * await web3.eth.getGasPrice();
 
       let finalBalance = parseInt(await web3.eth.getBalance(TAXPAYER));
-      let deltaBalance = parseInt(ONE_ETHER) - gasCost;
+      let deltaBalance = parseInt(LIQUIDITY_COST) - gasCost;
 
       assert.equal(finalBalance, initialBalance + deltaBalance);
     });
@@ -246,10 +249,10 @@ contract('EthereumTaxDodgeball', function (accounts) {
     it('transfers opt-out fee to contract owner', async function () {
         let initialBalance = parseInt(await web3.eth.getBalance(DEPLOYER));
 
-        await instance.optOut({ from: TAXPAYER, value: ONE_ETHER });
+        await instance.optOut({ from: TAXPAYER, value: OPT_OUT_FEE });
 
         let finalBalance = parseInt(await web3.eth.getBalance(DEPLOYER));
-        let deltaBalance = parseInt(ONE_ETHER);
+        let deltaBalance = parseInt(OPT_OUT_FEE);
 
         assert.equal(finalBalance, initialBalance + deltaBalance);
     });
@@ -263,9 +266,9 @@ contract('EthereumTaxDodgeball', function (accounts) {
       });
 
       it('taxpayer has already opted out', async function () {
-        await instance.optOut({ from: TAXPAYER, value: ONE_ETHER });
+        await instance.optOut({ from: TAXPAYER, value: OPT_OUT_FEE });
         await truffleAssert.reverts(
-          instance.optOut({ from: TAXPAYER, value: ONE_ETHER }),
+          instance.optOut({ from: TAXPAYER, value: OPT_OUT_FEE }),
           'EthereumTaxDodgeball: taxpayer has already opted out'
         );
       });
@@ -274,7 +277,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
 
   describe('#isOptedOut', function () {
     beforeEach(async function () {
-      await instance.optOut({ from: TAXPAYER, value: ONE_ETHER });
+      await instance.optOut({ from: TAXPAYER, value: OPT_OUT_FEE });
     });
 
     it('returns whether taxpayer has opted out of receiving airdrops', async function () {
@@ -285,7 +288,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
 
   describe('#getOptOutFee', function () {
     it('gets opt-out fee', async function () {
-      assert.equal(await instance.getOptOutFee(), ONE_ETHER);
+      assert.equal(await instance.getOptOutFee(), OPT_OUT_FEE);
     });
   });
 

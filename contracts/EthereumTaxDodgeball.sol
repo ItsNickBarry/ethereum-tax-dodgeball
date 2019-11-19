@@ -21,9 +21,9 @@ contract EthereumTaxDodgeball {
   event LiquidityAdded(address token, uint costBasis, uint volume);
   event Airdrop(address token);
 
-  constructor () public {
+  constructor (uint optOutFee) public {
     _owner = msg.sender;
-    _optOutFee = 1 ether;
+    _optOutFee = optOutFee;
   }
 
   /**
