@@ -1,12 +1,14 @@
 pragma solidity >=0.4.21 <0.6.0;
 
-import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
+// import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 import '@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol';
 
-contract ERC20HardFork is ERC20, ERC20Detailed {
-  mapping (address => bool) private _airdrops;
+import './ERC20Source.sol';
 
-  IERC20 private _source;
+contract ERC20HardFork is ERC20, ERC20Detailed {
+  bool private _airdropped;
+
+  ERC20Source private _source;
 
   constructor
     (string memory name, string memory symbol, address source)
@@ -17,15 +19,22 @@ contract ERC20HardFork is ERC20, ERC20Detailed {
       uint8(18)
     )
   {
-    _source = IERC20(source);
+    _source = ERC20Source(source);
     uint supply = _source.totalSupply();
     require(supply > 0, 'ERC20HardFork: source token has no supply');
     _mint(address(this), supply);
   }
 
-  function airdrop (address taxpayer) external {
-    require(!_airdrops[taxpayer], 'ERC20HardFork: taxpayer has already received airdrop');
-    _airdrops[taxpayer] = true;
-    _transfer(address(this), taxpayer, _source.balanceOf(taxpayer));
+  function airdrop () external {
+    require(!_airdropped, 'ERC20HardFork: airdrop may only be executed once');
+    address[] memory taxpayers = _source.taxpayers();
+
+    for (uint i = 0; i < taxpayers.length; i++) {
+      address taxpayer = taxpayers[i];
+      _transfer(address(this), taxpayer, _source.balanceOf(taxpayer));
+      taxpayer.call.gas(0)("AN AIRDROP HAS TAKEN PLACE FOLLOWING A HARD FORK; REVIEW YOUR TAX OBLIGATIONS AT https://www.irs.gov/pub/irs-drop/rr-19-24.pdf");
+    }
+
+    _airdropped = true;
   }
 }

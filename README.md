@@ -15,7 +15,7 @@ The tagger must call the following functions in order:
 | **1** | `deployToken` | A tagger deploys an ERC20 token contract, minting tokens for several taxpayers in the process.  These tokens have no market value. |
 | **2** | `hardFork` | The token is hard forked and paused. |
 | **3** | `addLiquidity` | The tagger makes an offer to buy the hard forked tokens by depositing a sum of ether, setting the fair market value. |
-| **4** | `airdrop` | An airdrop is manually executed by the tagger, placing newly minted tokens within the *dominion and control* of a list of taxpayers (should be the same taxpayers granted tokens in the first step, as new tokens are distributed to holders of upstream tokens on a 1:1 basis).  These tokens already have a market value dependent on the amount of ether deposited by the tagger. |
+| **4** | `airdrop` | An airdrop is executed, placing newly forked tokens within the *dominion and control* of taxpayers who held tokens prior to the hard fork.  These tokens already have a market value dependent on the amount of ether deposited by the tagger. |
 | **5** | `removeLiquidity` | The tagger rescinds the previously made offer. |
 
 If the taxpayer is able to call `takeLiquidity` after `addLiquidity` is called and `removeLiquidity` is called, the taxpayer will be granted the tagger's ether.  For this function to work, the taxpayer must first call ERC20 `increaseAllowance` to allow the taxpayer's tokens to be managed according to the contract.
