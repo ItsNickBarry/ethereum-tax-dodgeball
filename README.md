@@ -33,3 +33,17 @@ npm test
 ```
 
 One of the tests tends to fail, perhaps due to a race condition.  It's good enough for government work.
+
+___
+
+```bash
+⭐    ⭐    ⭐    ⭐    ⭐    ⭐
+   ⭐    ⭐    ⭐    ⭐    ⭐   
+⭐    ⭐    ⭐    ⭐    ⭐    ⭐
+   ⭐    ⭐    ⭐    ⭐    ⭐   
+⭐    ⭐    ⭐    ⭐    ⭐    ⭐
+   ⭐    ⭐    ⭐    ⭐    ⭐   
+⭐    ⭐    ⭐    ⭐    ⭐    ⭐
+   ⭐    ⭐    ⭐    ⭐    ⭐   
+⭐    ⭐    ⭐    ⭐    ⭐    ⭐
+```
