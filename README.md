@@ -2,7 +2,7 @@
 
 Tag friends or strangers with tax liability with or without their knowledge.
 
-Only U.S. taxpayers may be tagged, but anyone in the world can tag a U.S. taxpayer.
+Only U.S. taxpayers can be tagged, but anyone in the world can tag a U.S. taxpayer.
 
 See the IRS guidance on this process [here](https://www.irs.gov/pub/irs-drop/rr-19-24.pdf).
 
@@ -22,7 +22,7 @@ If the taxpayer is able to call `takeLiquidity` after `addLiquidity` is called a
 
 ## Opt-out
 
-A taxpayer with a healthy fear of the law may choose to opt out of participation.  Simply call the `optOut` function and include in the transaction a sum of ether greater than or equal to the `optOutFee`.
+A taxpayer with a healthy fear of the law may choose to opt out of participation.  Simply call the `optOut` function and include in the transaction a sum of ether greater than or equal to the opt-out fee (`getOptOutFee`).
 
 ## Development
 

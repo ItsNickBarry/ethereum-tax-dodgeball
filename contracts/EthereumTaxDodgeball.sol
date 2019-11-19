@@ -127,6 +127,14 @@ contract EthereumTaxDodgeball {
   }
 
   /**
+   * @dev get opt-out fee
+   * @return uint opt-out fee
+   */
+  function getOptOutFee () external view returns (uint) {
+    return _optOutFee;
+  }
+
+  /**
    * @dev set new opt-out fee
    * @param fee amount (in wei) taxpayer must pay in order to opt out
    */

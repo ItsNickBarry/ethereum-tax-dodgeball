@@ -262,9 +262,16 @@ contract('EthereumTaxDodgeball', function (accounts) {
     });
   });
 
+  describe('#getOptOutFee', function () {
+    it('gets opt-out fee', async function () {
+      assert.equal(await instance.getOptOutFee(), ONE_ETHER);
+    });
+  });
+
   describe('#setOptOutFee', function () {
     it('sets opt-out fee', async function () {
       await instance.setOptOutFee(1, { from: DEPLOYER });
+      assert.equal(await instance.getOptOutFee(), 1);
       await truffleAssert.passes(instance.optOut({ from: TAXPAYER, value: 1 }));
     });
 
