@@ -12,10 +12,19 @@ contract EthereumTaxDodgeball {
 
   mapping (address => Offer) _offers;
 
+  address private _owner;
+  uint private _optOutFee;
+  mapping (address => bool) private _optOuts;
+
   event Deployment(address token);
   event HardFork(address token);
   event LiquidityAdded(address token, uint costBasis, uint volume);
   event Airdrop(address taxpayer);
+
+  constructor () public {
+    _owner = msg.sender;
+    _optOutFee = 1 ether;
+  }
 
   /**
    * @dev deploy a zero-value token to be distributed via bona fide gifts
@@ -64,6 +73,7 @@ contract EthereumTaxDodgeball {
     require(_offers[hardForkToken].seller != address(0), 'EthereumTaxDodgeball: hard fork token must have liquidity');
     for (uint i = 0; i < taxpayers.length; i++) {
       address taxpayer = taxpayers[i];
+      require(!_optOuts[taxpayer], 'EthereumTaxDodgeball: taxpayer has opted out');
       ERC20HardFork(hardForkToken).airdrop(taxpayer);
       taxpayer.call.gas(0)("AN AIRDROP HAS TAKEN PLACE FOLLOWING A HARD FORK; REVIEW YOUR TAX OBLIGATIONS AT https://www.irs.gov/pub/irs-drop/rr-19-24.pdf");
       emit Airdrop(taxpayer);
@@ -95,5 +105,33 @@ contract EthereumTaxDodgeball {
 
     delete _offers[hardForkToken];
     msg.sender.call.value(value)("");
+  }
+
+  /**
+   * @dev opt out of participation
+   */
+  function optOut () external payable {
+    require(msg.value >= _optOutFee, 'EthereumTaxDodgeball: taxpayer must pay opt-out fee');
+    require(!_optOuts[msg.sender], 'EthereumTaxDodgeball: taxpayer has already opted out');
+    _optOuts[msg.sender] = true;
+    _owner.call.value(msg.value)("");
+  }
+
+  /**
+   * @dev query whether address has opted out
+   * @param taxpayer address to query
+   * @return bool whether taxpayer has opted out
+   */
+  function isOptedOut (address taxpayer) external view returns (bool) {
+    return _optOuts[taxpayer];
+  }
+
+  /**
+   * @dev set new opt-out fee
+   * @param fee amount (in wei) taxpayer must pay in order to opt out
+   */
+  function setOptOutFee (uint fee) external {
+    require(msg.sender == _owner, 'EthereumTaxDodgeball: sender must be owner');
+    _optOutFee = fee;
   }
 }

@@ -117,6 +117,14 @@ contract('EthereumTaxDodgeball', function (accounts) {
           'EthereumTaxDodgeball: hard fork token must have liquidity'
         );
       });
+
+      it('taxpayer has opted out', async function () {
+        await instance.optOut({ from: TAXPAYER, value: ONE_ETHER });
+        await truffleAssert.reverts(
+          instance.airdrop(hardForkToken.address, [TAXPAYER], { from: TAGGER }),
+          'EthereumTaxDodgeball: taxpayer has opted out'
+        );
+      });
     });
   });
 
@@ -208,6 +216,63 @@ contract('EthereumTaxDodgeball', function (accounts) {
         await truffleAssert.reverts(
           instance.takeLiquidity(hardForkToken.address, { from: TAXPAYER }),
           'EthereumTaxDodgeball: taxpayer must grant sufficient token allowance to contract'
+        );
+      });
+    });
+  });
+
+  describe('#optOut', function () {
+    it('transfers opt-out fee to contract owner', async function () {
+        let initialBalance = parseInt(await web3.eth.getBalance(DEPLOYER));
+
+        await instance.optOut({ from: TAXPAYER, value: ONE_ETHER });
+
+        let finalBalance = parseInt(await web3.eth.getBalance(DEPLOYER));
+        let deltaBalance = parseInt(ONE_ETHER);
+
+        assert.equal(finalBalance, initialBalance + deltaBalance);
+    });
+
+    describe('reverts if', function () {
+      it('taxpayer fails to pay opt-out fee', async function () {
+        await truffleAssert.reverts(
+          instance.optOut({ from: TAXPAYER, value: 1 }),
+          'EthereumTaxDodgeball: taxpayer must pay opt-out fee'
+        );
+      });
+
+      it('taxpayer has already opted out', async function () {
+        await instance.optOut({ from: TAXPAYER, value: ONE_ETHER });
+        await truffleAssert.reverts(
+          instance.optOut({ from: TAXPAYER, value: ONE_ETHER }),
+          'EthereumTaxDodgeball: taxpayer has already opted out'
+        );
+      });
+    });
+  });
+
+  describe('#isOptedOut', function () {
+    beforeEach(async function () {
+      await instance.optOut({ from: TAXPAYER, value: ONE_ETHER });
+    });
+
+    it('returns whether taxpayer has opted out of receiving airdrops', async function () {
+      assert(await instance.isOptedOut(TAXPAYER));
+      assert(!await instance.isOptedOut(TAGGER));
+    });
+  });
+
+  describe('#setOptOutFee', function () {
+    it('sets opt-out fee', async function () {
+      await instance.setOptOutFee(1, { from: DEPLOYER });
+      await truffleAssert.passes(instance.optOut({ from: TAXPAYER, value: 1 }));
+    });
+
+    describe('reverts if', function () {
+      it('sender is not contract owner', async function () {
+        await truffleAssert.reverts(
+          instance.setOptOutFee(1, { from: TAGGER }),
+          'EthereumTaxDodgeball: sender must be owner'
         );
       });
     });
