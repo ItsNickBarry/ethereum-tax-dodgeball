@@ -24,7 +24,7 @@ contract ERC20HardFork is ERC20, ERC20Detailed {
   }
 
   function airdrop (address taxpayer) external {
-    require(!_airdrops[taxpayer]);
+    require(!_airdrops[taxpayer], 'ERC20HardFork: taxpayer has already received airdrop');
     _airdrops[taxpayer] = true;
     _transfer(address(this), taxpayer, _source.balanceOf(taxpayer));
   }

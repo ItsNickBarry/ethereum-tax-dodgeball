@@ -125,6 +125,14 @@ contract('EthereumTaxDodgeball', function (accounts) {
           'EthereumTaxDodgeball: taxpayer has opted out'
         );
       });
+
+      it('taxpayer has already received airdrop', async function () {
+        await instance.airdrop(hardForkToken.address, [TAXPAYER], { from: TAGGER });
+        truffleAssert.reverts(
+          instance.airdrop(hardForkToken.address, [TAXPAYER], { from: TAGGER }),
+          'ERC20HardFork: taxpayer has already received airdrop'
+        );
+      });
     });
   });
 
