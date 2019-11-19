@@ -19,7 +19,7 @@ contract EthereumTaxDodgeball {
 
   /**
    * @dev deploy a zero-value token to be distributed via bona fide gifts
-   * @param supply of tokens to gift to each taxpayer
+   * @param supply quantity of tokens to gift to each taxpayer
    */
   function deployToken (uint supply, address[] calldata taxpayers) external {
     ERC20Source token = new ERC20Source(supply, taxpayers);
