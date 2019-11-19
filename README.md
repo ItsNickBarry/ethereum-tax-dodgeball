@@ -8,27 +8,21 @@ See the IRS guidance on this process [here](https://www.irs.gov/pub/irs-drop/rr-
 
 ## Usage
 
-Call the following functions:
+The tagger must call the following functions in order:
+1. `deployToken`
+1. `hardFork`
+1. `addLiquidity`
+1. `airdrop`
+1. `removeLiquidity`
 
-```solidity
-
-```
-
-To withdraw your investment, call the `withdraw` function:
-
-```solidity
-contract.withdraw();
-```
-
-### Opt Out
-
-An opt-out function is available for taxpayers who do not wish to participate.  Simply send the required opt-out fee to the `optOut` function to be excluded from future airdrops.
+If the taxpayer is able to call `takeLiquidity` after `addLiquidity` is called and `removeLiquidity` is called, the taxpayer will be granted the tagger's ether.  The tagger may then be able to report a capital loss for tax purposes.
 
 ## Development
 
 To compile and test:
 
 ```bash
-npm run compile
-npm run test
+npm test
 ```
+
+One of the tests tends to fail, perhaps due to a race condition.  It's good enough for government work.
