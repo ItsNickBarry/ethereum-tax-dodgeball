@@ -87,7 +87,11 @@ $footer-padding: 3rem 1.25rem 3rem;
 
 @import "~bulma";
 
-@import url('https://fonts.googleapis.com/css?family=Lusitana&display=swap');
+@font-face {
+  font-family: 'Lusitana';
+  src: url(../static/Lusitana-Regular.ttf);
+}
+
 * {
   font-family: 'Lusitana', serif;
 }
