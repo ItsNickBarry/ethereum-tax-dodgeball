@@ -49,7 +49,13 @@ npx saber
 To build static site:
 
 ```bash
-./build.sh
+npm run build
+```
+
+To build and deploy static site to gh-pages:
+
+```bash
+npm run deploy
 ```
 
 ___

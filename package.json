@@ -20,6 +20,8 @@
   ],
   "main": "index.js",
   "scripts": {
+    "predeploy": "./build.sh",
+    "deploy": "gh-pages -d public -t",
     "test": "buidler test"
   },
   "repository": "https://github.com/itsnickbarry/ethereum-tax-dodgeball",
@@ -34,6 +36,7 @@
     "bulma": "^0.8.0",
     "eslint": "^6.6.0",
     "eslint-plugin-vue": "^6.0.1",
+    "gh-pages": "^2.1.1",
     "saber": "^0.11.3",
     "sass": "^1.23.7",
     "sass-loader": "^8.0.0",
