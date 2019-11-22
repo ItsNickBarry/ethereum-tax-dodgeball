@@ -26,13 +26,31 @@ A taxpayer with a healthy fear of the law may choose to opt out of participation
 
 ## Development
 
-To compile and test:
+### Contracts
+
+To compile and test contracts:
 
 ```bash
 npm test
 ```
 
 One of the tests tends to fail, perhaps due to a race condition.  It's good enough for government work.
+
+### Interface
+
+The static site is built with [Saber](https://saber.land/).
+
+To serve static site in development mode:
+
+```bash
+npx saber
+```
+
+To build static site:
+
+```bash
+./build.sh
+```
 
 ___
 
