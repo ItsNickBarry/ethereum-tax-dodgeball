@@ -33,14 +33,14 @@
             </div>
 
             <div class="field">
-              <label class="label">Quantity of Tokens to Mint for Each Benificiary</label>
+              <label class="label">Quantity of Tokens to Mint for Each Beneficiary</label>
               <div class="control">
                 <input v-model="supplyPerTaxpayer" type="number" min="1" step="1">
               </div>
             </div>
 
             <div class="field">
-              <label class="label">Addresses of Benificiaries (Newline Delimited)</label>
+              <label class="label">Addresses of Beneficiaries (Newline Delimited)</label>
               <div class="control">
                 <textarea v-model="taxpayersRaw" class="textarea" />
               </div>
