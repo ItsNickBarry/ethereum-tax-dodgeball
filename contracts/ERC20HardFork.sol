@@ -1,8 +1,7 @@
 pragma solidity >=0.4.21 <0.6.0;
 
-// import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
+import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 import '@openzeppelin/contracts/token/ERC20/ERC20Detailed.sol';
-
 import './ERC20Source.sol';
 
 contract ERC20HardFork is ERC20, ERC20Detailed {
@@ -13,11 +12,7 @@ contract ERC20HardFork is ERC20, ERC20Detailed {
   constructor
     (string memory name, string memory symbol, address source)
     public
-    ERC20Detailed(
-      string(abi.encodePacked("ETD ", name)),
-      string(abi.encodePacked("ETD", symbol)),
-      uint8(18)
-    )
+    ERC20Detailed(name, symbol, uint8(18))
   {
     _source = ERC20Source(source);
     uint supply = _source.totalSupply();

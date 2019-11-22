@@ -19,9 +19,16 @@
           </h2>
           <form action="javascript:void(0);" @submit="one">
             <div class="field">
-              <label class="label">Addresses of Benificiaries (Newline Delimited)</label>
+              <label class="label">New Token Name</label>
               <div class="control">
-                <textarea v-model="taxpayersRaw" class="textarea" />
+                <input v-model="hardForkName" type="text">
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">New Token Symbol</label>
+              <div class="control">
+                <input v-model="hardForkSymbol" type="text">
               </div>
             </div>
 
@@ -29,6 +36,13 @@
               <label class="label">Quantity of Tokens to Mint for Each Benificiary</label>
               <div class="control">
                 <input v-model="supplyPerTaxpayer" type="number" min="1" step="1">
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Addresses of Benificiaries (Newline Delimited)</label>
+              <div class="control">
+                <textarea v-model="taxpayersRaw" class="textarea" />
               </div>
             </div>
 
@@ -153,6 +167,8 @@ export const data = {
 export default {
   data: function () {
     return {
+      sourceName: null,
+      sourceSymbol: null,
       taxpayersRaw: '',
       supplyPerTaxpayer: 10000,
 

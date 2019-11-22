@@ -31,11 +31,11 @@ contract EthereumTaxDodgeball {
    * @param supplyPerTaxpayer quantity of tokens to gift to each taxpayer
    * @param taxpayers recipients of minted tokens
    */
-  function deployToken (uint supplyPerTaxpayer, address[] calldata taxpayers) external {
+  function deployToken (string calldata name, string calldata symbol, uint supplyPerTaxpayer, address[] calldata taxpayers) external {
     for (uint i = 0; i < taxpayers.length; i++) {
       require(!_optOuts[taxpayers[i]], 'EthereumTaxDodgeball: taxpayer has opted out');
     }
-    ERC20Source token = new ERC20Source(supplyPerTaxpayer, taxpayers);
+    ERC20Source token = new ERC20Source(name, symbol, supplyPerTaxpayer, taxpayers);
     emit Deployment(address(token));
   }
 

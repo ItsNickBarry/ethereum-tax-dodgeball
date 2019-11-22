@@ -13,6 +13,9 @@ const SUPPLY            = `3${ '0'.repeat(18) }`;
 const LIQUIDITY_COST    = `5${ '0'.repeat(18) }`;
 const LIQUIDITY_VOLUME  = SUPPLY; // LIQUIDITY_VOLUME <= supply
 
+const SOURCE_NAME = 'IRS Coin';
+const SOURCE_SYMBOL = 'IRS';
+
 contract('EthereumTaxDodgeball', function (accounts) {
   const DEPLOYER = accounts[0];
   const TAGGER = accounts[1];
@@ -28,7 +31,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
   describe('#deployToken', function () {
     it('mints tokens for taxpayers', async function () {
 
-      let tx = await instance.deployToken(SUPPLY, TAXPAYERS, { from: TAGGER });
+      let tx = await instance.deployToken(SOURCE_NAME, SOURCE_SYMBOL, SUPPLY, TAXPAYERS, { from: TAGGER });
       let sourceToken = await ERC20Source.at(tx.logs[0].args.token);
 
       for (let taxpayer of TAXPAYERS) {
@@ -37,7 +40,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
     });
 
     it('emits a Deployment event', async function () {
-      let tx = await instance.deployToken(SUPPLY, TAXPAYERS, { from: TAGGER });
+      let tx = await instance.deployToken(SOURCE_NAME, SOURCE_SYMBOL, SUPPLY, TAXPAYERS, { from: TAGGER });
 
       await truffleAssert.eventEmitted(tx, 'Deployment', function (e) {
         return !!e.token;
@@ -48,7 +51,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
       it('taxpayer has opted out', async function () {
         await instance.optOut({ from: TAXPAYER, value: OPT_OUT_FEE });
         await truffleAssert.reverts(
-          instance.deployToken(SUPPLY, TAXPAYERS, { from: TAGGER }),
+          instance.deployToken(SOURCE_NAME, SOURCE_SYMBOL, SUPPLY, TAXPAYERS, { from: TAGGER }),
           'EthereumTaxDodgeball: taxpayer has opted out'
         );
       });
@@ -59,7 +62,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
     let sourceToken;
 
     beforeEach(async function () {
-      let tx = await instance.deployToken(SUPPLY, TAXPAYERS, { from: TAGGER });
+      let tx = await instance.deployToken(SOURCE_NAME, SOURCE_SYMBOL, SUPPLY, TAXPAYERS, { from: TAGGER });
       sourceToken = await ERC20Source.at(tx.logs[0].args.token);
     });
 
@@ -93,7 +96,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
     let hardForkToken;
 
     beforeEach(async function () {
-      let deployTx = await instance.deployToken(SUPPLY, TAXPAYERS, { from: TAGGER });
+      let deployTx = await instance.deployToken(SOURCE_NAME, SOURCE_SYMBOL, SUPPLY, TAXPAYERS, { from: TAGGER });
       let sourceToken = await ERC20Source.at(deployTx.logs[0].args.token);
       let tx = await instance.hardFork('IRSCoin', 'IRS', sourceToken.address, { from: TAGGER });
       hardForkToken = await ERC20HardFork.at(tx.logs[0].args.token);
@@ -112,7 +115,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
     let hardForkToken;
 
     beforeEach(async function () {
-      let deployTx = await instance.deployToken(SUPPLY, TAXPAYERS, { from: TAGGER });
+      let deployTx = await instance.deployToken(SOURCE_NAME, SOURCE_SYMBOL, SUPPLY, TAXPAYERS, { from: TAGGER });
       let sourceToken = await ERC20Source.at(deployTx.logs[0].args.token);
       let tx = await instance.hardFork('IRSCoin', 'IRS', sourceToken.address, { from: TAGGER });
       hardForkToken = await ERC20HardFork.at(tx.logs[0].args.token);
@@ -156,7 +159,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
     let hardForkToken;
 
     beforeEach(async function () {
-      let deployTx = await instance.deployToken(SUPPLY, TAXPAYERS, { from: TAGGER });
+      let deployTx = await instance.deployToken(SOURCE_NAME, SOURCE_SYMBOL, SUPPLY, TAXPAYERS, { from: TAGGER });
       let sourceToken = await ERC20Source.at(deployTx.logs[0].args.token);
       let tx = await instance.hardFork('IRSCoin', 'IRS', sourceToken.address, { from: TAGGER });
       hardForkToken = await ERC20HardFork.at(tx.logs[0].args.token);
@@ -192,7 +195,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
     let hardForkToken;
 
     beforeEach(async function () {
-      let deployTx = await instance.deployToken(SUPPLY, TAXPAYERS, { from: TAGGER });
+      let deployTx = await instance.deployToken(SOURCE_NAME, SOURCE_SYMBOL, SUPPLY, TAXPAYERS, { from: TAGGER });
       let sourceToken = await ERC20Source.at(deployTx.logs[0].args.token);
       let tx = await instance.hardFork('IRSCoin', 'IRS', sourceToken.address, { from: TAGGER });
       hardForkToken = await ERC20HardFork.at(tx.logs[0].args.token);
