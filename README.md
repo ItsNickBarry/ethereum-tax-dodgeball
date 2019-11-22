@@ -6,6 +6,8 @@ Only U.S. taxpayers can be tagged, but anyone in the world can tag a U.S. taxpay
 
 See the IRS guidance on this process [here](https://www.irs.gov/pub/irs-drop/rr-19-24.pdf).
 
+A [dapp](https://itnsickbarry.github.io/ethereum-tax-dodgeball) is available to interface with the smart contract.
+
 ## Usage
 
 The tagger must call the following functions in order:

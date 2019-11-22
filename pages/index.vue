@@ -11,7 +11,7 @@
         <h2 class="subtitle is-3 has-text-dark">
           Tag friends or strangers with U.S. tax obligations
         </h2>
-        <a class="button is-dark" href="/fork">Go</a>
+        <a class="button is-dark" href="/fork.html">Go</a>
       </div>
     </div>
 
@@ -26,7 +26,7 @@
         <h2 class="subtitle is-3 has-text-dark">
           Manage Airdropped Tokens
         </h2>
-        <a class="button is-dark" href="/redeem">Go</a>
+        <a class="button is-dark" href="/redeem.html">Go</a>
       </div>
     </div>
   </div>

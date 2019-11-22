@@ -6,23 +6,24 @@
       <div class="level">
         <div class="level-left">
           <div class="container">
-            <div class="hero">
-              <h1 class="title is-2 has-text-warning">
-                Ethereum Tax Dodgeball
-              </h1>
-              <h2 class="subtitle is-4 has-text-warning">
-                by <a class="has-text-light" href="https://github.com/ItsNickBarry">Nick Barry</a>
-              </h2>
-            </div>
+            <h1 class="title is-2 has-text-warning">
+              Ethereum Tax Dodgeball
+            </h1>
+            <h2 class="subtitle is-4 has-text-warning">
+              by <a class="has-text-light" href="https://github.com/ItsNickBarry">Nick Barry</a>
+            </h2>
           </div>
         </div>
 
         <div class="level-right">
-          <div class="container">
+          <div class="level-item">
             <ul>
               <li><a class="has-text-light" href="/">Home</a></li>
               <li><a class="has-text-light" href="/about.html">About</a></li>
-              <li><a class="has-text-light" href="https://github.com/ItsNickBarry/ethereum-tax-dodgeball">Repository</a></li>
+              <li><a class="has-text-light" href="https://github.com/ItsNickBarry/ethereum-tax-dodgeball">Source Code</a></li>
+              <br>
+              <li><span class="has-text-warning">Current Network: {{ currentNetwork }}</span></li>
+              <li><span class="has-text-warning">Current Account: {{ currentAccount }}</span></li>
             </ul>
           </div>
         </div>
@@ -32,7 +33,45 @@
 </template>
 
 <script>
-export default {};
+const NETWORKS = {
+  '1': 'Ethereum Main Network',
+  '2': 'Morden Test Network',
+  '3': 'Ropsten Test Network',
+  '4': 'Rinkeby Test Network',
+  '42': 'Kovan Test Network',
+};
+
+export default {
+  data: function () {
+    return {
+      currentNetwork: null,
+      currentAccount: null,
+    };
+  },
+
+  mounted: function () {
+    if (typeof global.ethereum === 'undefined') {
+      alert('An Ethereum client such as Metamask is required to use this site.');
+    } else {
+      this.updateAccount();
+      global.ethereum.on('accountsChanged', this.updateAccount);
+      this.updateNetwork();
+      global.ethereum.on('networkChanged', this.updateNetwork);
+    }
+  },
+
+  methods: {
+    updateNetwork: function (network) {
+      let net = network || global.ethereum.networkVersion;
+      this.currentNetwork = net ? NETWORKS[net] || `Private Network (${ net })` : 'Not Connected';
+    },
+
+    updateAccount: function (accounts) {
+      window.currentAccount = accounts && accounts[0];
+      this.currentAccount = accounts && accounts[0] || global.ethereum.selectedAddress || 'Not Connected';
+    },
+  },
+};
 </script>
 
 <style lang="css" scoped>
@@ -42,6 +81,10 @@ footer {
 </style>
 
 <style lang="scss">
+@import "~bulma/sass/utilities/_all";
+
+$footer-padding: 3rem 1.25rem 3rem;
+
 @import "~bulma";
 
 @import url('https://fonts.googleapis.com/css?family=Lusitana&display=swap');
