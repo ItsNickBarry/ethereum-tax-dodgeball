@@ -1,13 +1,12 @@
-usePlugin("@nomiclabs/buidler-truffle5");
+usePlugin('@nomiclabs/buidler-truffle5');
+usePlugin('@nomiclabs/buidler-ganache');
 
-// This is a sample Buidler task. To learn how to create your own go to
-// https://buidler.dev/guides/create-task.html
-task("accounts", "Prints the list of accounts", async () => {
-  const accounts = await web3.eth.getAccounts();
-
-  for (const account of accounts) {
-    console.log(account);
-  }
-});
-
-module.exports = {};
+module.exports = {
+  defaultNetwork: 'ganache',
+  networks: {
+    ganache: {
+      mnemonic: 'test',
+      url: 'http://127.0.0.1:8545',
+    },
+  },
+};
