@@ -92,7 +92,10 @@ contract EthereumTaxDodgeball {
   }
 
   /**
-   * @dev see #addLiquidity
+   * @dev "Under § 61, all gains or undeniable accessions to wealth, clearly
+   *   realized, over which a taxpayer has complete dominion, are included in
+   *   gross income."
+   * @param hardForkToken token to exchange for ether
    */
   function takeLiquidity (address hardForkToken) external {
     Offer storage offer = _offers[hardForkToken];
