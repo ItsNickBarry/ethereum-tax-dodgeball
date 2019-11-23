@@ -4,14 +4,24 @@
       class="column"
       :style="{ 'background-image': 'url(red_dust_scratch.png)' }"
     >
-      <div class="container has-text-dark">
+      <div class="row">
         <h1 class="title is-1 has-text-dark">
           For Blockchain Administrators
         </h1>
+      </div>
+      <div class="row">
         <h2 class="subtitle is-3 has-text-dark">
           Tag friends or strangers with U.S. tax obligations
         </h2>
-        <a class="button is-dark" href="/fork.html">Go</a>
+      </div>
+      <div class="row">
+        <a
+          class="button is-dark"
+          :style="{ 'background-image': 'url(starring.png)' }"
+          href="/fork.html"
+        >
+          Go
+        </a>
       </div>
     </div>
 
@@ -19,14 +29,24 @@
       class="column"
       :style="{ 'background-image': 'url(blue_dust_scratch.png)' }"
     >
-      <div class="container has-text-dark">
+      <div class="row">
         <h1 class="title is-1 has-text-dark">
           For Taxpayers
         </h1>
+      </div>
+      <div class="row">
         <h2 class="subtitle is-3 has-text-dark">
-          Manage Airdropped Tokens
+          Exercise Dominion &amp; Control
         </h2>
-        <a class="button is-dark" href="/redeem.html">Go</a>
+      </div>
+      <div class="row">
+        <a
+          class="button is-dark"
+          :style="{ 'background-image': 'url(starring.png)' }"
+          href="/redeem.html"
+        >
+          Go
+        </a>
       </div>
     </div>
   </div>
@@ -51,10 +71,29 @@ export default {};
 
 .column {
   display: flex;
-  align-items: center;
+  flex-flow: column;
+  justify-content: space-around;
 }
 
-.column > * {
-  padding: 30px;
+.row {
+  padding: 0px 30px;
+  display: flex;
+  flex-flow: column;
+  flex-basis: 0;
+}
+
+.row:nth-child(1) {
+  justify-content: flex-end;
+  flex-grow: 4;
+}
+
+.row:nth-child(2) {
+  justify-content: flex-start;
+  flex-grow: 1;
+}
+
+.row:nth-child(3) {
+  justify-content: flex-start;
+  flex-grow: 4;
 }
 </style>
