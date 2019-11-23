@@ -53,6 +53,13 @@ const ADDRESSES = {
   '42': 'Not Deployed',
 };
 
+let devAddress;
+try {
+  devAddress = require('../static/dev_address.json').address;
+} catch (e) {
+  devAddress = null;
+}
+
 export default {
   data: function () {
     return {
@@ -72,7 +79,7 @@ export default {
     },
 
     contractAddress: function () {
-      return ADDRESSES[this.currentNetwork] || this.devAddress || 'Not Deployed';
+      return ADDRESSES[this.currentNetwork] || devAddress || 'Not Deployed';
     },
   },
 
@@ -88,15 +95,6 @@ export default {
     global.ethereum.on('networkChanged', this.updateNetwork);
 
     global.ethereum.enable();
-
-    let req = new XMLHttpRequest();
-    req.open('GET', '/dev_address.json', true);
-    req.onload = function () {
-      if (req.status >= 200 && req.status < 400) {
-        this.devAddress = JSON.parse(req.response).address;
-      }
-    }.bind(this);
-    req.send();
   },
 
   methods: {
