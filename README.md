@@ -28,12 +28,30 @@ A taxpayer with a healthy fear of the law may choose to opt out of participation
 
 ## Development
 
+Development and testing require that a local blockchain be run in a separate terminal window:
+
+```bash
+yarn run ganache
+```
+
+Alternatively, some buidler commands will work if an in-process network is specified instead:
+
+```bash
+yarn test --network buidlerevm
+```
+
 ### Contracts
 
 To compile and test contracts:
 
 ```bash
-npm test
+yarn test
+```
+
+To include a gas usage report:
+
+```bash
+REPORT_GAS=true yarn test
 ```
 
 One of the tests tends to fail, perhaps due to a race condition.  It's good enough for government work.
@@ -42,22 +60,16 @@ One of the tests tends to fail, perhaps due to a race condition.  It's good enou
 
 The static site is built with [Saber](https://saber.land/).
 
-To serve static site in development mode:
+To deploy contracts and serve static site in development mode:
 
 ```bash
-npx saber
-```
-
-To build static site:
-
-```bash
-npm run build
+yarn run dev
 ```
 
 To build and deploy static site to gh-pages:
 
 ```bash
-npm run deploy
+yarn run deploy
 ```
 
 ___
