@@ -2,4 +2,4 @@
 
 npx yarn licenses generate-disclaimer --silent > static/LICENSE.txt
 
-npx saber build
+npx buidler run scripts/export_abi.js && npx saber build
