@@ -20,7 +20,7 @@
           :style="{ 'background-image': 'url(starring.png)' }"
           href="/fork.html"
         >
-          Go
+          Proceed
         </a>
       </div>
     </div>
@@ -45,7 +45,7 @@
           :style="{ 'background-image': 'url(starring.png)' }"
           href="/redeem.html"
         >
-          Go
+          Proceed
         </a>
       </div>
     </div>

@@ -1,8 +1,16 @@
+const fs = require('fs');
+
 async function main() {
   const EthereumTaxDodgeball = artifacts.require('EthereumTaxDodgeball');
 
   const instance = await EthereumTaxDodgeball.new(`1${ '0'.repeat(18) }`);
   console.log(`EthereumTaxDodgeball deployed to ${ instance.address }`);
+
+  json = JSON.stringify({ address: instance.address });
+
+  fs.writeFileSync(`${ __dirname }/../static/dev_address.json`, json, { flag: 'w' }, function (error, data) {
+    console.log(err || 'contract address written to static/ directory');
+  });
 }
 
 main()

@@ -5,3 +5,4 @@ node_modules/
 public/
 
 static/LICENSE.txt
+static/dev_address.json

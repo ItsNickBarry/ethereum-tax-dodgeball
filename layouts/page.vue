@@ -22,8 +22,9 @@
               <li><a class="has-text-light" href="/about.html">About</a></li>
               <li><a class="has-text-light" href="https://github.com/ItsNickBarry/ethereum-tax-dodgeball">Source Code</a></li>
               <br>
-              <li><span class="has-text-warning">Current Network: {{ currentNetwork }}</span></li>
-              <li><span class="has-text-warning">Current Account: {{ currentAccount }}</span></li>
+              <li><span class="has-text-warning">Current Network: {{ currentNetworkName }}</span></li>
+              <li><span class="has-text-warning">Current Account: {{ currentAccountName }}</span></li>
+              <li><span class="has-text-warning">Contract Address: {{ contractAddress }}</span></li>
             </ul>
           </div>
         </div>
@@ -38,7 +39,18 @@ const NETWORKS = {
   '2': 'Morden Test Network',
   '3': 'Ropsten Test Network',
   '4': 'Rinkeby Test Network',
+  '5': 'Görli Test Network',
   '42': 'Kovan Test Network',
+};
+
+const ADDRESSES = {
+  // TODO: store deployed contract addresses by network id
+  '1':  'Not Deployed',
+  '2':  'Not Deployed',
+  '3':  'Not Deployed',
+  '4':  'Not Deployed',
+  '5':  'Not Deployed',
+  '42': 'Not Deployed',
 };
 
 export default {
@@ -46,29 +58,54 @@ export default {
     return {
       currentNetwork: null,
       currentAccount: null,
+      devAddress: null,
     };
+  },
+
+  computed: {
+    currentNetworkName: function () {
+      return NETWORKS[this.currentNetwork] || `Private Network (${ this.currentNetwork })` || 'Not Connected';
+    },
+
+    currentAccountName: function () {
+      return this.currentAccount || 'Not Connected';
+    },
+
+    contractAddress: function () {
+      return ADDRESSES[this.currentNetwork] || this.devAddress || 'Not Deployed';
+    },
   },
 
   mounted: function () {
     if (typeof global.ethereum === 'undefined') {
       alert('An Ethereum client such as Metamask is required to use this site.');
-    } else {
-      this.updateAccount();
-      global.ethereum.on('accountsChanged', this.updateAccount);
-      this.updateNetwork();
-      global.ethereum.on('networkChanged', this.updateNetwork);
+      return;
     }
+
+    this.updateAccount();
+    global.ethereum.on('accountsChanged', this.updateAccount);
+    this.updateNetwork();
+    global.ethereum.on('networkChanged', this.updateNetwork);
+
+    global.ethereum.enable();
+
+    let req = new XMLHttpRequest();
+    req.open('GET', '/dev_address.json', true);
+    req.onload = function () {
+      if (req.status >= 200 && req.status < 400) {
+        this.devAddress = JSON.parse(req.response).address;
+      }
+    }.bind(this);
+    req.send();
   },
 
   methods: {
-    updateNetwork: function (network) {
-      let net = network || global.ethereum.networkVersion;
-      this.currentNetwork = net ? NETWORKS[net] || `Private Network (${ net })` : 'Not Connected';
+    updateAccount: function (accounts) {
+      this.currentAccount = accounts && accounts[0] || global.ethereum.selectedAddress;
     },
 
-    updateAccount: function (accounts) {
-      window.currentAccount = accounts && accounts[0];
-      this.currentAccount = accounts && accounts[0] || global.ethereum.selectedAddress || 'Not Connected';
+    updateNetwork: function (network) {
+      this.currentNetwork = network || global.ethereum.networkVersion;
     },
   },
 };
