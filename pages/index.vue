@@ -18,7 +18,7 @@
         <a
           class="button is-dark"
           :style="{ 'background-image': 'url(starring.png)' }"
-          href="/fork.html"
+          href="/blockchain_administrators.html"
         >
           Proceed
         </a>
@@ -43,7 +43,7 @@
         <a
           class="button is-dark"
           :style="{ 'background-image': 'url(starring.png)' }"
-          href="/redeem.html"
+          href="/taxpayers.html"
         >
           Proceed
         </a>

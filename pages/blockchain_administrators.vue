@@ -23,7 +23,7 @@
           <h2 class="subtitle is-3">
             Step One: Deploy and Distribute an ERC20 Token
           </h2>
-          <form action="javascript:void(0);" @submit="one">
+          <form action="javascript:void(0);" @submit="deployToken">
             <fieldset :disabled="disabled">
               <div class="field">
                 <label class="label">New Token Name</label>
@@ -66,7 +66,7 @@
           <h2 class="subtitle is-3">
             Step Two: Hard Fork
           </h2>
-          <form action="javascript:void(0);" @submit="two">
+          <form action="javascript:void(0);" @submit="hardFork">
             <fieldset :disabled="disabled">
               <div class="field">
                 <label class="label">New Token Name</label>
@@ -85,7 +85,7 @@
               <div class="field">
                 <label class="label">Source Token Contract Address</label>
                 <div class="control">
-                  <input v-model="sourceToken" placeholder="Output of Step One">
+                  <input v-model="sourceToken" type="text" placeholder="Output of Step One">
                 </div>
               </div>
 
@@ -102,17 +102,17 @@
           <h2 class="subtitle is-3">
             Step Three: Add Liquidity for New Token
           </h2>
-          <form action="javascript:void(0);" @submit="three">
+          <form action="javascript:void(0);" @submit="addLiquidity">
             <fieldset :disabled="disabled">
               <div class="field">
                 <label class="label">Hard Fork Contract Address</label>
                 <div class="control">
-                  <input v-model="hardForkToken" placeholder="Output of Step Two">
+                  <input v-model="hardForkToken" type="text" placeholder="Output of Step Two">
                 </div>
               </div>
 
               <div class="field">
-                <label class="label">Ether Value</label>
+                <label class="label">Value (ether)</label>
                 <div class="control">
                   <input v-model="volume" type="number" min="0.01">
                 </div>
@@ -131,12 +131,12 @@
           <h2 class="subtitle is-3">
             Step Four: Airdrop
           </h2>
-          <form action="javascript:void(0);" @submit="four">
+          <form action="javascript:void(0);" @submit="airdrop">
             <fieldset :disabled="disabled">
               <div class="field">
                 <label class="label">Hard Fork Contract Address</label>
                 <div class="control">
-                  <input v-model="hardForkToken" placeholder="Output of Step Two">
+                  <input v-model="hardForkToken" type="text" placeholder="Output of Step Two">
                 </div>
               </div>
 
@@ -153,12 +153,12 @@
           <h2 class="subtitle is-3">
             Step Five: Remove Liquidity (optional)
           </h2>
-          <form action="javascript:void(0);" @submit="five">
+          <form action="javascript:void(0);" @submit="removeLiquidity">
             <fieldset :disabled="disabled">
               <div class="field">
                 <label class="label">Hard Fork Contract Address</label>
                 <div class="control">
-                  <input v-model="hardForkToken" placeholder="Output of Step Two">
+                  <input v-model="hardForkToken" type="text" placeholder="Output of Step Two">
                 </div>
               </div>
 
@@ -208,19 +208,19 @@ export default {
   },
 
   methods: {
-    one: function () {
+    deployToken: function () {
       // TODO: ...
     },
-    two: function () {
+    hardFork: function () {
       // TODO: ...
     },
-    three: function () {
+    addLiquidity: function () {
       // TODO: ...
     },
-    four: function () {
+    airdrop: function () {
       // TODO: ...
     },
-    five: function () {
+    removeLiquidity: function () {
       // TODO: ...
     },
   },
