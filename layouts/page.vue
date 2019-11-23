@@ -19,13 +19,9 @@
           <div class="level-item">
             <ul>
               <li>
-                <div class="is-flex">
-                  <a class="has-text-light" href="/"><Bank title="Home" :size="40" /></a>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <a class="has-text-light" href="/about.html"><Information title="About" :size="40" /></a>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <a class="has-text-light" href="https://github.com/ItsNickBarry/ethereum-tax-dodgeball"><GithubBox title="Source Code" :size="40" /></a>
-                </div>
+                <a class="nav-icon has-text-light" href="/"><Bank title="Home" :size="40" /></a>
+                <a class="nav-icon has-text-light" href="/about.html"><Information title="About" :size="40" /></a>
+                <a class="nav-icon has-text-light" href="https://github.com/ItsNickBarry/ethereum-tax-dodgeball"><GithubBox title="Source Code" :size="40" /></a>
               </li>
               <br>
               <li>
@@ -169,6 +165,10 @@ $footer-padding: 3rem 1.25rem 3rem;
   src: url(../static/Inconsolata-Regular.ttf);
 }
 
+html {
+  overflow-y: auto;
+}
+
 #app {
   font-family: 'Lusitana', serif;
 }
@@ -177,8 +177,8 @@ $footer-padding: 3rem 1.25rem 3rem;
   font-family: 'Inconsolata', monospace;
 }
 
-html {
-  overflow-y: auto;
+.nav-icon {
+  margin-right: 35px;
 }
 
 .blockchain-administrators {
