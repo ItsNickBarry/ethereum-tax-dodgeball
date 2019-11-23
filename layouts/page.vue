@@ -1,8 +1,8 @@
 <template lang="html">
-  <section class="hero is-fullheight">
+  <section id="app" class="hero is-fullheight">
     <slot name="default" />
 
-    <footer class="footer hero-foot" :style="{ 'background-image': 'url(starring.png)' }">
+    <footer class="footer hero-foot stars">
       <div class="level">
         <div class="level-left">
           <div class="container">
@@ -18,13 +18,40 @@
         <div class="level-right">
           <div class="level-item">
             <ul>
-              <li><a class="has-text-light" href="/">Home</a></li>
-              <li><a class="has-text-light" href="/about.html">About</a></li>
-              <li><a class="has-text-light" href="https://github.com/ItsNickBarry/ethereum-tax-dodgeball">Source Code</a></li>
+              <li>
+                <div class="is-flex">
+                  <a class="has-text-light" href="/"><Bank title="Home" :size="40" /></a>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <a class="has-text-light" href="/about.html"><Information title="About" :size="40" /></a>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <a class="has-text-light" href="https://github.com/ItsNickBarry/ethereum-tax-dodgeball"><GithubBox title="Source Code" :size="40" /></a>
+                </div>
+              </li>
               <br>
-              <li><span class="has-text-warning">Current Network: {{ currentNetworkName }}</span></li>
-              <li><span class="has-text-warning">Current Account: {{ currentAccountName }}</span></li>
-              <li><span class="has-text-warning">Contract Address: {{ contractAddressName }}</span></li>
+              <li>
+                <div class="level has-text-warning">
+                  <span>Current Network:</span>
+                  <span class="monospace">
+                    &nbsp;{{ currentNetworkName }}
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div class="level has-text-warning">
+                  <span>Current Account:</span>
+                  <span class="monospace">
+                    &nbsp;{{ currentAccountName }}
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div class="level has-text-warning">
+                  <span>Contract Address:</span>
+                  <span class="monospace">
+                    &nbsp;{{ contractAddressName }}
+                  </span>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -34,6 +61,10 @@
 </template>
 
 <script>
+import Bank from 'vue-material-design-icons/Bank.vue';
+import Information from 'vue-material-design-icons/Information.vue';
+import GithubBox from 'vue-material-design-icons/GithubBox.vue';
+
 const NETWORKS = {
   '1': 'Ethereum Main Network',
   '2': 'Morden Test Network',
@@ -61,6 +92,8 @@ try {
 }
 
 export default {
+  components: { Bank, Information, GithubBox },
+
   data: function () {
     return {
       currentNetwork: null,
@@ -131,11 +164,36 @@ $footer-padding: 3rem 1.25rem 3rem;
   src: url(../static/Lusitana-Regular.ttf);
 }
 
-* {
+@font-face {
+  font-family: 'Inconsolata';
+  src: url(../static/Inconsolata-Regular.ttf);
+}
+
+#app {
   font-family: 'Lusitana', serif;
+}
+
+.monospace {
+  font-family: 'Inconsolata', monospace;
 }
 
 html {
   overflow-y: auto;
+}
+
+.blockchain-administrators {
+  background-image: url(../static/red_dust_scratch.png);
+}
+
+.taxpayers {
+  background-image: url(../static/blue_dust_scratch.png);
+}
+
+.about {
+  background-image: url(../static/green_dust_scratch.png);
+}
+
+.stars {
+  background-image: url(../static/starring.png);
 }
 </style>

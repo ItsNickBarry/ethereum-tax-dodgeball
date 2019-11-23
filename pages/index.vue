@@ -1,9 +1,6 @@
 <template lang="html">
   <div class="columns is-gapless">
-    <div
-      class="column"
-      :style="{ 'background-image': 'url(red_dust_scratch.png)' }"
-    >
+    <div class="column blockchain-administrators">
       <div class="row">
         <h1 class="title is-1 has-text-dark">
           For Blockchain Administrators
@@ -15,20 +12,11 @@
         </h2>
       </div>
       <div class="row">
-        <a
-          class="button is-dark"
-          :style="{ 'background-image': 'url(starring.png)' }"
-          href="/blockchain_administrators.html"
-        >
-          Proceed
-        </a>
+        <a class="button is-dark stars" href="/blockchain_administrators.html">Proceed</a>
       </div>
     </div>
 
-    <div
-      class="column"
-      :style="{ 'background-image': 'url(blue_dust_scratch.png)' }"
-    >
+    <div class="column taxpayers">
       <div class="row">
         <h1 class="title is-1 has-text-dark">
           For Taxpayers
@@ -40,13 +28,7 @@
         </h2>
       </div>
       <div class="row">
-        <a
-          class="button is-dark"
-          :style="{ 'background-image': 'url(starring.png)' }"
-          href="/taxpayers.html"
-        >
-          Proceed
-        </a>
+        <a class="button is-dark stars" href="/taxpayers.html">Proceed</a>
       </div>
     </div>
   </div>
@@ -85,6 +67,7 @@ export default {};
 .row:nth-child(1) {
   justify-content: flex-end;
   flex-grow: 4;
+  margin-top: 15px;
 }
 
 .row:nth-child(2) {
@@ -95,5 +78,6 @@ export default {};
 .row:nth-child(3) {
   justify-content: flex-start;
   flex-grow: 4;
+  margin-bottom: 15px;
 }
 </style>

@@ -1,8 +1,5 @@
 <template lang="html">
-  <div
-    class="columns is-gapless"
-    :style="{ 'background-image': 'url(green_dust_scratch.png)' }"
-  >
+  <div class="columns is-gapless about">
     <div class="column">
       <div class="container">
         <h1 class="title is-1 has-text-dark">
@@ -28,7 +25,7 @@
 
         <div class="content">
           <p>
-            The webfont used is Lusitana by Ana Paula Megda, released under <a href="http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web">OFL 1.1</a>.
+            The webfonts used are Lusitana by Ana Paula Megda and Inconsolata by Raph Levien, released under <a href="http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web">OFL 1.1</a>.
           </p>
         </div>
 

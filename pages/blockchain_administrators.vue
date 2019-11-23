@@ -1,8 +1,5 @@
 <template lang="html">
-  <div
-    class="columns is-gapless"
-    :style="{ 'background-image': 'url(red_dust_scratch.png)' }"
-  >
+  <div class="columns is-gapless blockchain-administrators">
     <div class="column">
       <div class="container">
         <div class="content">

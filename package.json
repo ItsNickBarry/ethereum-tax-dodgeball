@@ -45,6 +45,7 @@
     "sass": "^1.23.7",
     "sass-loader": "^8.0.0",
     "truffle-assertions": "^0.9.2",
+    "vue-material-design-icons": "^4.2.0",
     "web3": "^1.2.4",
     "yarn": "^1.19.1"
   }
