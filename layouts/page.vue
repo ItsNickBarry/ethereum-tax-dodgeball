@@ -24,7 +24,7 @@
               <br>
               <li><span class="has-text-warning">Current Network: {{ currentNetworkName }}</span></li>
               <li><span class="has-text-warning">Current Account: {{ currentAccountName }}</span></li>
-              <li><span class="has-text-warning">Contract Address: {{ contractAddress }}</span></li>
+              <li><span class="has-text-warning">Contract Address: {{ contractAddressName }}</span></li>
             </ul>
           </div>
         </div>
@@ -45,12 +45,12 @@ const NETWORKS = {
 
 const ADDRESSES = {
   // TODO: store deployed contract addresses by network id
-  '1':  'Not Deployed',
-  '2':  'Not Deployed',
-  '3':  'Not Deployed',
-  '4':  'Not Deployed',
-  '5':  'Not Deployed',
-  '42': 'Not Deployed',
+  '1':  null,
+  '2':  null,
+  '3':  null,
+  '4':  null,
+  '5':  null,
+  '42': null,
 };
 
 let devAddress;
@@ -79,7 +79,11 @@ export default {
     },
 
     contractAddress: function () {
-      return ADDRESSES[this.currentNetwork] || devAddress || 'Not Deployed';
+      return this.currentNetwork in ADDRESSES ? ADDRESSES[this.currentNetwork] : devAddress;
+    },
+
+    contractAddressName: function () {
+      return this.contractAddress || 'Not Deployed';
     },
   },
 
