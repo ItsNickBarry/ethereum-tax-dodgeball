@@ -37,28 +37,28 @@
               <div class="field">
                 <label class="label">New Token Name</label>
                 <div class="control">
-                  <input v-model="hardForkName" type="text">
+                  <input v-model="sourceName" type="text" required>
                 </div>
               </div>
 
               <div class="field">
                 <label class="label">New Token Symbol</label>
                 <div class="control">
-                  <input v-model="hardForkSymbol" type="text">
+                  <input v-model="sourceSymbol" type="text" required>
                 </div>
               </div>
 
               <div class="field">
                 <label class="label">Quantity of Tokens to Mint for Each Beneficiary</label>
                 <div class="control">
-                  <input v-model="supplyPerTaxpayer" type="number" min="1" step="1">
+                  <input v-model="supplyPerTaxpayer" type="number" min="1" step="1" required>
                 </div>
               </div>
 
               <div class="field">
                 <label class="label">Addresses of Beneficiaries (Newline Delimited)</label>
                 <div class="control">
-                  <textarea v-model="taxpayersRaw" class="textarea" />
+                  <textarea v-model="taxpayersRaw" class="textarea" required />
                 </div>
               </div>
 
@@ -83,21 +83,21 @@
               <div class="field">
                 <label class="label">New Token Name</label>
                 <div class="control">
-                  <input v-model="hardForkName" type="text">
+                  <input v-model="hardForkName" type="text" required>
                 </div>
               </div>
 
               <div class="field">
                 <label class="label">New Token Symbol</label>
                 <div class="control">
-                  <input v-model="hardForkSymbol" type="text">
+                  <input v-model="hardForkSymbol" type="text" required>
                 </div>
               </div>
 
               <div class="field">
                 <label class="label">Source Token Contract Address</label>
                 <div class="control">
-                  <input v-model="sourceToken" type="text" placeholder="Output of Step One">
+                  <input v-model="sourceToken" type="text" placeholder="Output of Step One" required>
                 </div>
               </div>
 
@@ -124,14 +124,14 @@
               <div class="field">
                 <label class="label">Hard Fork Contract Address</label>
                 <div class="control">
-                  <input v-model="hardForkToken" type="text" placeholder="Output of Step Two">
+                  <input v-model="hardForkToken" type="text" placeholder="Output of Step Two" required>
                 </div>
               </div>
 
               <div class="field">
                 <label class="label">Value (ether)</label>
                 <div class="control">
-                  <input v-model="volume" type="number" min="0.01">
+                  <input v-model="volume" type="number" min="0.01" required>
                 </div>
               </div>
 
@@ -156,7 +156,7 @@
               <div class="field">
                 <label class="label">Hard Fork Contract Address</label>
                 <div class="control">
-                  <input v-model="hardForkToken" type="text" placeholder="Output of Step Two">
+                  <input v-model="hardForkToken" type="text" placeholder="Output of Step Two" required>
                 </div>
               </div>
 
@@ -181,7 +181,7 @@
               <div class="field">
                 <label class="label">Hard Fork Contract Address</label>
                 <div class="control">
-                  <input v-model="hardForkToken" type="text" placeholder="Output of Step Two">
+                  <input v-model="hardForkToken" type="text" placeholder="Output of Step Two" required>
                 </div>
               </div>
 

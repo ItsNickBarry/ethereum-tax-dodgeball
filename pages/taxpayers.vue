@@ -37,7 +37,7 @@
               <div class="field">
                 <label class="label">Hard Fork Contract Address</label>
                 <div class="control">
-                  <input v-model="hardForkToken" type="text">
+                  <input v-model="hardForkAddress" type="text" required>
                 </div>
               </div>
 
@@ -68,7 +68,7 @@
               <div class="field">
                 <label class="label">Opt-Out Fee (ether)</label>
                 <div class="control">
-                  <input v-model="optOutFeeDisplay" type="number" disabled="true">
+                  <input v-model="optOutFeeDisplay" type="number" disabled required>
                 </div>
               </div>
 
@@ -93,7 +93,7 @@ export const data = {
 export default {
   data: function () {
     return {
-      hardForkToken: null,
+      hardForkAddress: null,
       optOutFee: 0,
       isOptedOut: false,
     };
