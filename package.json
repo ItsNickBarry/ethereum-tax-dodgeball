@@ -20,7 +20,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "ganache": "ganache-cli -m test",
+    "ganache": "ganache-cli -m 'melody exact hedgehog pulse parade edge school eight invite doll luggage injury'",
     "dev": "./dev.sh",
     "predeploy": "./build.sh",
     "deploy": "gh-pages -d public -t",
