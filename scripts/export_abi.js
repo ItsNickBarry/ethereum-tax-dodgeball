@@ -1,10 +1,23 @@
-const fs = require('fs');
+const fs = require('fs-extra');
+const path = require('path');
+
+const DIRECTORY = '../static/abi/';
 
 async function main() {
-  let abi = JSON.stringify(require('../artifacts/EthereumTaxDodgeball.json').abi);
+  fs.emptyDirSync(path.resolve(__dirname, DIRECTORY));
+  fs.openSync(path.resolve(__dirname, `${ DIRECTORY }/.keep`), 'w');
 
-  fs.writeFileSync(`${ __dirname }/../static/abi/EthereumTaxDodgeball.json`, abi, { flag: 'w' }, function (error, data) {
-    console.log(error || 'contract abi written to static/abi/ directory');
+  let contracts = [
+    'EthereumTaxDodgeball',
+    'ERC20HardFork',
+  ];
+
+  contracts.forEach(function (contract) {
+    let abi = JSON.stringify(require(`../artifacts/${ contract }.json`).abi);
+
+    fs.writeFileSync(`${ __dirname }/${ DIRECTORY }/${ contract }.json`, abi, { flag: 'w' }, function (error, data) {
+      console.log(error || `${ contract } contract abi written to static/abi/ directory`);
+    });
   });
 }
 
