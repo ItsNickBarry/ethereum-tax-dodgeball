@@ -13,9 +13,16 @@
 
           <p>The following actions are intended to be run in order.</p>
 
-          <p v-show="disabled">
-            No known EthereumTaxDodgeball contract is deployed on this network.
-          </p>
+          <article v-show="disabled" class="message is-warning">
+            <div class="message-header">
+              Warning: Contract Not Found
+            </div>
+            <div class="message-body">
+              <p>The EthereumTaxDodgeball contract is not known to have been deployed on the current network.</p>
+
+              <p>Please connect to the Ethereum Main Network or the Ropsten Test Network.</p>
+            </div>
+          </article>
         </div>
 
         <div class="content">
