@@ -32,6 +32,14 @@
 
           <p>Taxpayers who have gained <i>dominion &amp; control</i> of tokens through an airdrop following a hard fork through the EthereumTaxDodgeball system may be able to exchange their tokens for ether.</p>
 
+          <p>
+            This action requires two blockchain transactions:
+            <ol>
+              <li>Authorization of the EthereumTaxDodgeball contract to manage the taxpayer's airdropped tokens</li>
+              <li>Acceptance of an existing offer to purchase the taxpayer's airdropped tokens</li>
+            </ol>
+          </p>
+
           <form action="javascript:void(0);" @submit="takeLiquidity">
             <fieldset :disabled="disabled">
               <div class="field">
@@ -86,6 +94,8 @@
 </template>
 
 <script>
+const HARD_FORK_ABI = require('../static/abi/ERC20HardFork.json');
+
 export const data = {
   layout: 'page',
 };
@@ -96,6 +106,8 @@ export default {
       hardForkAddress: null,
       optOutFee: 0,
       isOptedOut: false,
+
+      loading: false,
     };
   },
 
@@ -112,6 +124,10 @@ export default {
       return this.$parent.contract;
     },
 
+    hardForkContract: function () {
+      return !!this.hardForkAddress && this.$parent.web3 && new this.$parent.web3.eth.Contract(HARD_FORK_ABI, this.hardForkAddress);
+    },
+
     optOutFeeDisplay: function () {
       return Number(this.optOutFee) / 1e18;
     },
@@ -125,12 +141,22 @@ export default {
   },
 
   methods: {
-    takeLiquidity: function () {
-      // TODO:
+    takeLiquidity: async function () {
+      this.loading = true;
+
+      let balance = await this.hardForkContract.methods.balanceOf(this.currentAccount).call();
+      await this.hardForkContract.methods.increaseAllowance(this.contract.address, balance).send({ from: this.currentAccount });
+
+      this.loading = false;
     },
 
-    optOut: function () {
-      // TODO:
+    optOut: async function () {
+      this.loading = true;
+
+      await this.contract.methods.optOut().send({ from: this.currentAccount, value: this.optOutFee });
+      this.setIsOptedOut();
+
+      this.loading = false;
     },
 
     setOptOutFee: async function () {

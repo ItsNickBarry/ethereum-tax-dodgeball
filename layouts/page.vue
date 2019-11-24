@@ -144,7 +144,7 @@ export default {
 
   methods: {
     updateAccount: function (accounts) {
-      this.currentAccount = accounts && accounts[0];
+      this.currentAccount = accounts && accounts[0] || global.ethereum.selectedAddress;
     },
 
     updateNetwork: function (network) {

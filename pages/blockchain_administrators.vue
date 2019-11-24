@@ -217,6 +217,8 @@ export default {
 
       hardForkToken: null,
       volume: 1,
+
+      loading: false,
     };
   },
 
@@ -234,26 +236,63 @@ export default {
     },
 
     taxpayers: function () {
-      return this.taxpayersRaw.split('\n');
+      return this.taxpayersRaw.split('\n').filter(t => t.length);
     },
   },
 
   methods: {
-    deployToken: function () {
-      // TODO: ...
-      global.cont = this.contract;
+    deployToken: async function () {
+      this.loading = true;
+
+      let tx = await this.contract.methods.deployToken(
+        this.sourceName, this.sourceSymbol, this.supplyPerTaxpayer, this.taxpayers
+      ).send({ from: this.currentAccount });
+
+      this.sourceToken = tx.events.Deployment.returnValues.token;
+
+      this.loading = false;
     },
-    hardFork: function () {
-      // TODO: ...
+
+    hardFork: async function () {
+      this.loading = true;
+
+      let tx = await this.contract.methods.hardFork(
+        this.hardForkName, this.hardForkSymbol, this.sourceToken
+      ).send({ from: this.currentAccount });
+
+      this.hardForkToken = tx.events.HardFork.returnValues.token;
+
+      this.loading = false;
     },
-    addLiquidity: function () {
-      // TODO: ...
+
+    addLiquidity: async function () {
+      this.loading = true;
+
+      await this.contract.methods.addLiquidity(
+        this.hardForkToken, this.volume
+      ).send({ from: this.currentAccount });
+
+      this.loading = false;
     },
-    airdrop: function () {
-      // TODO: ...
+
+    airdrop: async function () {
+      this.loading = true;
+
+      await this.contract.methods.airdrop(
+        this.hardForkToken
+      ).send({ from: this.currentAccount });
+
+      this.loading = false;
     },
-    removeLiquidity: function () {
-      // TODO: ...
+
+    removeLiquidity: async function () {
+      this.loading = true;
+
+      await this.contract.methods.removeLiquidity(
+        this.hardForkToken
+      ).send({ from: this.currentAccount });
+
+      this.loading = false;
     },
   },
 };
