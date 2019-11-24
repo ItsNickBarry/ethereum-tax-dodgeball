@@ -166,12 +166,12 @@ $footer-padding: 3rem 1.25rem 3rem;
 
 @font-face {
   font-family: 'Lusitana';
-  src: url(../static/Lusitana-Regular.ttf);
+  src: url(../static/fonts/Lusitana-Regular.ttf);
 }
 
 @font-face {
   font-family: 'Inconsolata';
-  src: url(../static/Inconsolata-Regular.ttf);
+  src: url(../static/fonts/Inconsolata-Regular.ttf);
 }
 
 html {
@@ -191,22 +191,22 @@ html {
 }
 
 .blockchain-administrators {
-  background-image: url(../static/red_dust_scratch.png);
+  background-image: url(../static/images/red_dust_scratch.png);
   background-repeat: repeat;
 }
 
 .taxpayers {
-  background-image: url(../static/blue_dust_scratch.png);
+  background-image: url(../static/images/blue_dust_scratch.png);
   background-repeat: repeat;
 }
 
 .about {
-  background-image: url(../static/green_dust_scratch.png);
+  background-image: url(../static/images/green_dust_scratch.png);
   background-repeat: repeat;
 }
 
 .stars {
-  background-image: url(../static/starring.png);
+  background-image: url(../static/images/starring.png);
   background-repeat: repeat;
 }
 </style>
