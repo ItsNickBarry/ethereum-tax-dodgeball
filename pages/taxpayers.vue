@@ -55,7 +55,7 @@
             Opt Out
           </h2>
 
-          <p>Taxpayers with a healthy fear of their government may elect to opt out of participation.  One must simply pay the opt-out fee in order to be excluded from all future token gifts made through the EthereumTaxDodgeball contract.</p>
+          <p>Taxpayers who maintain a healthy fear of their government may elect to opt out of participation.  One must simply pay the opt-out fee in order to be excluded from all future token gifts made through the EthereumTaxDodgeball contract.</p>
 
           <p>The fee at this time is {{ optOutFee }} ether.</p>
 

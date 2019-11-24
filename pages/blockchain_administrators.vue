@@ -117,6 +117,8 @@
 
           <p>One may, for whatever reason, exercise <i>dominion &amp; control</i> over one's ether by offering to buy a sum of newly hard-forked tokens.  This may affect the <i>fair market value</i> of said tokens.</p>
 
+          <p>A taxpayer who has gained, and is aware of having gained, <i>dominion &amp; control</i> of said tokens following an airdrop may accept said offer until it is rescinded.</p>
+
           <form action="javascript:void(0);" @submit="addLiquidity">
             <fieldset :disabled="disabled">
               <div class="field">
@@ -147,7 +149,7 @@
             Step Four: Airdrop
           </h2>
 
-          <p>Token contracts which are created through a hard fork event via the EthereumTaxDodgeball system contain a provision to airdrop new tokens to holders of pre-hard-fork upstream tokens.</p>
+          <p>Token contracts which are created through a hard fork event via the EthereumTaxDodgeball system contain a provision to airdrop new tokens to holders of pre-hard-fork upstream tokens.  An airdrop effectively grants <i>dominion &amp; control</i> of tokens to taxpayers.</p>
 
           <form action="javascript:void(0);" @submit="airdrop">
             <fieldset :disabled="disabled">
