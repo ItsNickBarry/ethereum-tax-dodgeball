@@ -57,6 +57,8 @@
 </template>
 
 <script>
+import Web3 from 'web3';
+
 import Bank from 'vue-material-design-icons/Bank.vue';
 import Information from 'vue-material-design-icons/Information.vue';
 import GithubBox from 'vue-material-design-icons/GithubBox.vue';
@@ -87,6 +89,8 @@ try {
   devAddress = null;
 }
 
+const ABI = require('../static/abi/EthereumTaxDodgeball.json');
+
 export default {
   components: { Bank, Information, GithubBox },
 
@@ -95,6 +99,8 @@ export default {
       currentNetwork: null,
       currentAccount: null,
       devAddress: null,
+
+      web3: null,
     };
   },
 
@@ -114,6 +120,10 @@ export default {
     contractAddressName: function () {
       return this.contractAddress || 'Not Deployed';
     },
+
+    contract: function () {
+      return !!this.contractAddress && this.web3 && new this.web3.eth.Contract(ABI, this.contractAddress);
+    },
   },
 
   mounted: function () {
@@ -128,11 +138,13 @@ export default {
     global.ethereum.on('networkChanged', this.updateNetwork);
 
     global.ethereum.enable();
+
+    this.web3 = new Web3(global.ethereum);
   },
 
   methods: {
     updateAccount: function (accounts) {
-      this.currentAccount = accounts && accounts[0] || global.ethereum.selectedAddress;
+      this.currentAccount = accounts && accounts[0];
     },
 
     updateNetwork: function (network) {
@@ -143,9 +155,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-footer {
-  background-repeat: repeat;
-}
 </style>
 
 <style lang="scss">
@@ -183,17 +192,21 @@ html {
 
 .blockchain-administrators {
   background-image: url(../static/red_dust_scratch.png);
+  background-repeat: repeat;
 }
 
 .taxpayers {
   background-image: url(../static/blue_dust_scratch.png);
+  background-repeat: repeat;
 }
 
 .about {
   background-image: url(../static/green_dust_scratch.png);
+  background-repeat: repeat;
 }
 
 .stars {
   background-image: url(../static/starring.png);
+  background-repeat: repeat;
 }
 </style>

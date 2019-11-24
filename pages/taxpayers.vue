@@ -57,14 +57,18 @@
 
           <p>Taxpayers who maintain a healthy fear of their government may elect to opt out of participation.  One must simply pay the opt-out fee in order to be excluded from all future token gifts made through the EthereumTaxDodgeball contract.</p>
 
-          <p>The fee at this time is {{ optOutFee }} ether.</p>
+          <p>The fee at this time is {{ optOutFeeDisplay }} ether.</p>
+
+          <p v-show="isOptedOut">
+            The current address has already opted out of the contract deployed on the current network.
+          </p>
 
           <form action="javascript:void(0);" @submit="optOut">
-            <fieldset :disabled="disabled">
+            <fieldset :disabled="disabled || isOptedOut">
               <div class="field">
                 <label class="label">Opt-Out Fee (ether)</label>
                 <div class="control">
-                  <input v-model="optOutFee" type="number" disabled="true">
+                  <input v-model="optOutFeeDisplay" type="number" disabled="true">
                 </div>
               </div>
 
@@ -89,7 +93,9 @@ export const data = {
 export default {
   data: function () {
     return {
+      hardForkToken: null,
       optOutFee: 0,
+      isOptedOut: false,
     };
   },
 
@@ -97,10 +103,25 @@ export default {
     disabled: function () {
       return !this.$parent.contractAddress;
     },
+
+    currentAccount: function () {
+      return this.$parent.currentAccount;
+    },
+
+    contract: function () {
+      return this.$parent.contract;
+    },
+
+    optOutFeeDisplay: function () {
+      return Number(this.optOutFee) / 1e18;
+    },
   },
 
-  mounted: function () {
-    // TODO: fetch opt-out fee
+  watch: {
+    contract: function () {
+      this.setOptOutFee();
+      this.setIsOptedOut();
+    },
   },
 
   methods: {
@@ -110,6 +131,14 @@ export default {
 
     optOut: function () {
       // TODO:
+    },
+
+    setOptOutFee: async function () {
+      this.optOutFee = await this.contract.methods.getOptOutFee().call();
+    },
+
+    setIsOptedOut: async function () {
+      this.isOptedOut = await this.contract.methods.isOptedOut(this.currentAccount).call();
     },
   },
 };

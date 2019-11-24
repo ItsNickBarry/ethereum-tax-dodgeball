@@ -221,18 +221,27 @@ export default {
   },
 
   computed: {
-    taxpayers: function () {
-      return this.taxpayersRaw.split('\n');
-    },
-
     disabled: function () {
       return !this.$parent.contractAddress;
+    },
+
+    currentAccount: function () {
+      return this.$parent.currentAccount;
+    },
+
+    contract: function () {
+      return this.$parent.contract;
+    },
+
+    taxpayers: function () {
+      return this.taxpayersRaw.split('\n');
     },
   },
 
   methods: {
     deployToken: function () {
       // TODO: ...
+      global.cont = this.contract;
     },
     hardFork: function () {
       // TODO: ...
