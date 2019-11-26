@@ -61,6 +61,16 @@ To build and deploy static site to gh-pages:
 yarn run deploy
 ```
 
+### Contract Deployment
+
+To deploy contracts to an arbitrary network, set the `URL` and `MNEMONIC` environment variables and run the `deploy` script with `generic` network configuration via buidler:
+
+```bash
+URL="http://localhost:8545" \
+MNEMONIC="melody exact hedgehog pulse parade edge school eight invite doll luggage injury" \
+npx buidler run scripts/deploy.js --network generic
+```
+
 ___
 
 ```bash

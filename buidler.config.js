@@ -15,8 +15,19 @@ module.exports = {
   defaultNetwork: 'ganache',
   networks: {
     ganache: {
-      mnemonic: 'test',
       url: 'http://127.0.0.1:8545',
+    },
+    generic: {
+      url: process.env.URL || '',
+      accounts: {
+        mnemonic: process.env.MNEMONIC || '',
+      },
+    },
+  },
+  solc: {
+    optimizer: {
+      enabled: true,
+      runs: 200,
     },
   },
   gasReporter: {
