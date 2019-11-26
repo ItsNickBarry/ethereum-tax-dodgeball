@@ -64,6 +64,8 @@ contract EthereumTaxDodgeball {
    * @param volume quantity of tokens to offer to purchase
    */
   function addLiquidity (address hardForkToken, uint volume) external payable {
+    require(msg.value > 0, 'EthereumTaxDodgeball: value must be non-zero');
+    require(_offers[hardForkToken].seller == address(0), 'EthereumTaxDodgeball: hard fork token must not have liquidity');
     _offers[hardForkToken] = Offer(msg.sender, msg.value, volume);
     emit LiquidityAdded(hardForkToken, msg.value, volume);
   }

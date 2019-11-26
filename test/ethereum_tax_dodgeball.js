@@ -44,7 +44,7 @@ contract('EthereumTaxDodgeball', function (accounts) {
 
       await truffleAssert.eventEmitted(tx, 'Deployment', function (e) {
         return !!e.token;
-      })
+      });
     });
 
     describe('reverts if', function () {
@@ -107,6 +107,24 @@ contract('EthereumTaxDodgeball', function (accounts) {
 
       await truffleAssert.eventEmitted(tx, 'LiquidityAdded', function (e) {
         return !!e.token && !!e.costBasis;
+      });
+    });
+
+    describe('reverts if', function () {
+      it('value is not included in transaction', async function () {
+        await truffleAssert.reverts(
+          instance.addLiquidity(hardForkToken.address, LIQUIDITY_VOLUME, { from: TAGGER, value: 0 }),
+          'EthereumTaxDodgeball: value must be non-zero'
+        );
+      });
+
+      it('hard fork token already has liquidity', async function () {
+        await instance.addLiquidity(hardForkToken.address, LIQUIDITY_VOLUME, { from: TAGGER, value: LIQUIDITY_COST });
+
+        await truffleAssert.reverts(
+          instance.addLiquidity(hardForkToken.address, LIQUIDITY_VOLUME, { from: TAGGER, value: LIQUIDITY_COST }),
+          'EthereumTaxDodgeball: hard fork token must not have liquidity'
+        );
       });
     });
   });
@@ -250,14 +268,14 @@ contract('EthereumTaxDodgeball', function (accounts) {
 
   describe('#optOut', function () {
     it('transfers opt-out fee to contract owner', async function () {
-        let initialBalance = parseInt(await web3.eth.getBalance(DEPLOYER));
+      let initialBalance = parseInt(await web3.eth.getBalance(DEPLOYER));
 
-        await instance.optOut({ from: TAXPAYER, value: OPT_OUT_FEE });
+      await instance.optOut({ from: TAXPAYER, value: OPT_OUT_FEE });
 
-        let finalBalance = parseInt(await web3.eth.getBalance(DEPLOYER));
-        let deltaBalance = parseInt(OPT_OUT_FEE);
+      let finalBalance = parseInt(await web3.eth.getBalance(DEPLOYER));
+      let deltaBalance = parseInt(OPT_OUT_FEE);
 
-        assert.equal(finalBalance, initialBalance + deltaBalance);
+      assert.equal(finalBalance, initialBalance + deltaBalance);
     });
 
     describe('reverts if', function () {
