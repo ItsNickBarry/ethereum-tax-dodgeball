@@ -6,21 +6,10 @@ Only U.S. taxpayers can be tagged, but anyone in the world can tag a U.S. taxpay
 
 See the IRS guidance on this process [here](https://www.irs.gov/pub/irs-drop/rr-19-24.pdf).
 
-A [dapp](https://itnsickbarry.github.io/ethereum-tax-dodgeball) is available to interface with the smart contract.
 
 ## Usage
 
-The tagger must call the following functions in order:
-
-| order | function | description |
-|-|-|-|
-| **1** | `deployToken` | A tagger deploys an ERC20 token contract, minting tokens for several taxpayers in the process.  These tokens have no market value. |
-| **2** | `hardFork` | The token is hard forked and paused. |
-| **3** | `addLiquidity` | The tagger makes an offer to buy the hard forked tokens by depositing a sum of ether, setting the fair market value. |
-| **4** | `airdrop` | An airdrop is executed, placing newly forked tokens within the *dominion and control* of taxpayers who held tokens prior to the hard fork.  These tokens already have a market value dependent on the amount of ether deposited by the tagger. |
-| **5** | `removeLiquidity` | The tagger rescinds the previously made offer. |
-
-If the taxpayer is able to grant the main contract an appropriate allowance (ERC20 `increaseAllowance`) and call `takeLiquidity` between the calls to `addLiquidity` and `removeLiquidity`, the taxpayer will complete the trade and keep the staked ether.
+A [dapp](https://itnsickbarry.github.io/ethereum-tax-dodgeball) is available to interface with the smart contract.
 
 ## Opt-out
 
