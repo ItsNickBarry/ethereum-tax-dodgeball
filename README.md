@@ -9,7 +9,7 @@ See the IRS guidance on this process [here](https://www.irs.gov/pub/irs-drop/rr-
 
 ## Usage
 
-A [dapp](https://itnsickbarry.github.io/ethereum-tax-dodgeball) is available to interface with the smart contract.
+A [dapp](https://itsnickbarry.github.io/ethereum-tax-dodgeball) is available to interface with the smart contract.
 
 ## Opt-out
 
