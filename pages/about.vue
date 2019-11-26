@@ -12,7 +12,7 @@
           </h2>
 
           <p>
-            EthereumTaxDodgeball is licensed under the <a href="https://choosealicense.com/licenses/agpl-3.0/">GNU AGPLv3</a>.
+            EthereumTaxDodgeball is licensed under the <a href="/LICENSE.md">GNU AGPLv3</a>.
           </p>
 
           <p>
