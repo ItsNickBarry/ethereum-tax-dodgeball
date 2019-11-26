@@ -329,4 +329,20 @@ contract('EthereumTaxDodgeball', function (accounts) {
       });
     });
   });
+
+  describe('#setOwner', function () {
+    it('sets owner', async function () {
+      await instance.setOwner(TAXPAYER, { from: DEPLOYER });
+      await truffleAssert.passes(instance.setOwner(DEPLOYER, { from: TAXPAYER }));
+    });
+
+    describe('reverts if', function () {
+      it('sender is not contract owner', async function () {
+        await truffleAssert.reverts(
+          instance.setOwner(TAXPAYER, { from: TAXPAYER }),
+          'EthereumTaxDodgeball: sender must be owner'
+        );
+      });
+    });
+  });
 });

@@ -146,4 +146,13 @@ contract EthereumTaxDodgeball {
     require(msg.sender == _owner, 'EthereumTaxDodgeball: sender must be owner');
     _optOutFee = fee;
   }
+
+  /**
+   * @dev set new owner
+   * @param owner new owner
+   */
+  function setOwner (address owner) external {
+    require(msg.sender == _owner, 'EthereumTaxDodgeball: sender must be owner');
+    _owner = owner;
+  }
 }
