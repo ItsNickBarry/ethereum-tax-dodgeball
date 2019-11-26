@@ -2,15 +2,19 @@
   <div class="columns is-gapless about">
     <div class="column">
       <div class="container">
-        <h1 class="title is-1 has-text-dark">
-          About
-        </h1>
-
-        <h2 class="subtitle is-3 has-text-dark">
-          Licenses
-        </h2>
-
         <div class="content">
+          <h1 class="title is-1 has-text-dark">
+            About
+          </h1>
+
+          <h2 class="subtitle is-3 has-text-dark">
+            Open Source Licenses
+          </h2>
+
+          <p>
+            EthereumTaxDodgeball is licensed under the <a href="https://choosealicense.com/licenses/agpl-3.0/">GNU AGPLv3</a>.
+          </p>
+
           <p>
             The background patterns are released under the <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a> License:
           </p>
@@ -21,15 +25,10 @@
             <li>Blue Dust &amp; Scratches by Nick Barry, derived from Green Dust &amp; Scratches</li>
             <li>Red Dust &amp; Scratches by Nick Barry, derived from Green Dust &amp; Scratches</li>
           </ul>
-        </div>
-
-        <div class="content">
           <p>
             The webfonts used are Lusitana by Ana Paula Megda and Inconsolata by Raph Levien, released under <a href="http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web">OFL 1.1</a>.
           </p>
-        </div>
 
-        <div class="content">
           <p>
             Additional licenses can be found <a href="/LICENSE.txt">here</a>.
           </p>

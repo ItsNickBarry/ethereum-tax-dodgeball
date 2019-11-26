@@ -1,6 +1,7 @@
 #!/bin/bash
 
 npx yarn licenses generate-disclaimer --silent > static/LICENSE.txt
+cp LICENSE.md static/
 
 rm static/dev_address.json
 
