@@ -152,6 +152,10 @@ export default {
       this.setOptOutFee();
       this.setIsOptedOut();
     },
+
+    currentAccount: function () {
+      this.setIsOptedOut();
+    },
   },
 
   methods: {
@@ -160,7 +164,7 @@ export default {
 
       try {
         let balance = await this.hardForkContract.methods.balanceOf(this.currentAccount).call();
-        debugger
+
         await this.hardForkContract.methods.increaseAllowance(this.contract.options.address, balance).send({ from: this.currentAccount });
         await this.contract.methods.takeLiquidity(this.hardForkAddress).send({ from: this.currentAccount });
       } catch (e) {
