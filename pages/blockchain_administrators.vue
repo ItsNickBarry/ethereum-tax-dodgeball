@@ -271,6 +271,8 @@ export default {
         ).send({ from: this.currentAccount });
 
         this.sourceToken = tx.events.Deployment.returnValues.token;
+      } catch (e) {
+        console.log(e.message);
       } finally {
         this.loading = false;
       }
@@ -285,6 +287,8 @@ export default {
         ).send({ from: this.currentAccount });
 
         this.hardForkToken = tx.events.HardFork.returnValues.token;
+      } catch (e) {
+        console.log(e.message);
       } finally {
         this.loading = false;
       }
@@ -297,6 +301,8 @@ export default {
         await this.contract.methods.addLiquidity(
           this.hardForkToken, this.supplyPerTaxpayer
         ).send({ from: this.currentAccount, value: String(Number(this.volumeEther) * Number(`1${ '0'.repeat(18) }`)) });
+      } catch (e) {
+        console.log(e.message);
       } finally {
         this.loading = false;
       }
@@ -309,6 +315,8 @@ export default {
         await this.contract.methods.airdrop(
           this.hardForkToken
         ).send({ from: this.currentAccount });
+      } catch (e) {
+        console.log(e.message);
       } finally {
         this.loading = false;
       }
@@ -321,6 +329,8 @@ export default {
         await this.contract.methods.removeLiquidity(
           this.hardForkToken
         ).send({ from: this.currentAccount });
+      } catch (e) {
+        console.log(e.message);
       } finally {
         this.loading = false;
       }

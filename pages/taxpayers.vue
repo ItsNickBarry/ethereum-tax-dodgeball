@@ -163,6 +163,8 @@ export default {
         debugger
         await this.hardForkContract.methods.increaseAllowance(this.contract.options.address, balance).send({ from: this.currentAccount });
         await this.contract.methods.takeLiquidity(this.hardForkAddress).send({ from: this.currentAccount });
+      } catch (e) {
+        console.log(e.message);
       } finally {
         this.loading = false;
       }
@@ -174,6 +176,8 @@ export default {
       try {
         await this.contract.methods.optOut().send({ from: this.currentAccount, value: this.optOutFee });
         this.setIsOptedOut();
+      } catch (e) {
+        console.log(e.message);
       } finally {
         this.loading = false;
       }
