@@ -28,7 +28,7 @@
   },
   "repository": "https://github.com/itsnickbarry/ethereum-tax-dodgeball",
   "author": "Nick Barry",
-  "license": "UNLICENSED",
+  "license": "AGPL-3.0-only",
   "private": true,
   "devDependencies": {
     "@nomiclabs/buidler": "^1.0.1",
