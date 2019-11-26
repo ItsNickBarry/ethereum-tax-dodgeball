@@ -88,12 +88,24 @@
             </fieldset>
           </form>
         </div>
+
+        <div
+          class="modal"
+          :class="{ 'is-active': loading }"
+        >
+          <div class="modal-background" />
+          <div class="modal-content">
+            <RippleLoader :size="360" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { RippleLoader } from 'vue-spinners-css';
+
 const HARD_FORK_ABI = require('../static/abi/ERC20HardFork.json');
 
 export const data = {
@@ -101,6 +113,8 @@ export const data = {
 };
 
 export default {
+  components: { RippleLoader },
+
   data: function () {
     return {
       hardForkAddress: null,
@@ -144,19 +158,25 @@ export default {
     takeLiquidity: async function () {
       this.loading = true;
 
-      let balance = await this.hardForkContract.methods.balanceOf(this.currentAccount).call();
-      await this.hardForkContract.methods.increaseAllowance(this.contract.address, balance).send({ from: this.currentAccount });
-
-      this.loading = false;
+      try {
+        let balance = await this.hardForkContract.methods.balanceOf(this.currentAccount).call();
+        debugger
+        await this.hardForkContract.methods.increaseAllowance(this.contract.options.address, balance).send({ from: this.currentAccount });
+        await this.contract.methods.takeLiquidity(this.hardForkAddress).send({ from: this.currentAccount });
+      } finally {
+        this.loading = false;
+      }
     },
 
     optOut: async function () {
       this.loading = true;
 
-      await this.contract.methods.optOut().send({ from: this.currentAccount, value: this.optOutFee });
-      this.setIsOptedOut();
-
-      this.loading = false;
+      try {
+        await this.contract.methods.optOut().send({ from: this.currentAccount, value: this.optOutFee });
+        this.setIsOptedOut();
+      } finally {
+        this.loading = false;
+      }
     },
 
     setOptOutFee: async function () {

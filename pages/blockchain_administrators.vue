@@ -129,9 +129,16 @@
               </div>
 
               <div class="field">
+                <label class="label">Volume</label>
+                <div class="control">
+                  <input v-model="supplyPerTaxpayer" type="number" min="1" step="1" required>
+                </div>
+              </div>
+
+              <div class="field">
                 <label class="label">Value (ether)</label>
                 <div class="control">
-                  <input v-model="volume" type="number" min="0.01" required>
+                  <input v-model="volumeEther" type="number" min="0.01" step="0.01" required>
                 </div>
               </div>
 
@@ -193,17 +200,31 @@
             </fieldset>
           </form>
         </div>
+
+        <div
+          class="modal"
+          :class="{ 'is-active': loading }"
+        >
+          <div class="modal-background" />
+          <div class="modal-content">
+            <RippleLoader :size="360" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { RippleLoader } from 'vue-spinners-css';
+
 export const data = {
   layout: 'page',
 };
 
 export default {
+  components: { RippleLoader },
+
   data: function () {
     return {
       sourceName: null,
@@ -216,7 +237,7 @@ export default {
       hardForkSymbol: null,
 
       hardForkToken: null,
-      volume: 1,
+      volumeEther: 1,
 
       loading: false,
     };
@@ -244,55 +265,65 @@ export default {
     deployToken: async function () {
       this.loading = true;
 
-      let tx = await this.contract.methods.deployToken(
-        this.sourceName, this.sourceSymbol, this.supplyPerTaxpayer, this.taxpayers
-      ).send({ from: this.currentAccount });
+      try {
+        let tx = await this.contract.methods.deployToken(
+          this.sourceName, this.sourceSymbol, this.supplyPerTaxpayer, this.taxpayers
+        ).send({ from: this.currentAccount });
 
-      this.sourceToken = tx.events.Deployment.returnValues.token;
-
-      this.loading = false;
+        this.sourceToken = tx.events.Deployment.returnValues.token;
+      } finally {
+        this.loading = false;
+      }
     },
 
     hardFork: async function () {
       this.loading = true;
 
-      let tx = await this.contract.methods.hardFork(
-        this.hardForkName, this.hardForkSymbol, this.sourceToken
-      ).send({ from: this.currentAccount });
+      try {
+        let tx = await this.contract.methods.hardFork(
+          this.hardForkName, this.hardForkSymbol, this.sourceToken
+        ).send({ from: this.currentAccount });
 
-      this.hardForkToken = tx.events.HardFork.returnValues.token;
-
-      this.loading = false;
+        this.hardForkToken = tx.events.HardFork.returnValues.token;
+      } finally {
+        this.loading = false;
+      }
     },
 
     addLiquidity: async function () {
       this.loading = true;
 
-      await this.contract.methods.addLiquidity(
-        this.hardForkToken, this.volume
-      ).send({ from: this.currentAccount });
-
-      this.loading = false;
+      try {
+        await this.contract.methods.addLiquidity(
+          this.hardForkToken, this.supplyPerTaxpayer
+        ).send({ from: this.currentAccount, value: String(Number(this.volumeEther) * Number(`1${ '0'.repeat(18) }`)) });
+      } finally {
+        this.loading = false;
+      }
     },
 
     airdrop: async function () {
       this.loading = true;
 
-      await this.contract.methods.airdrop(
-        this.hardForkToken
-      ).send({ from: this.currentAccount });
-
-      this.loading = false;
+      try {
+        await this.contract.methods.airdrop(
+          this.hardForkToken
+        ).send({ from: this.currentAccount });
+      } finally {
+        this.loading = false;
+      }
     },
 
     removeLiquidity: async function () {
       this.loading = true;
 
-      await this.contract.methods.removeLiquidity(
-        this.hardForkToken
-      ).send({ from: this.currentAccount });
-
-      this.loading = false;
+      try {
+        await this.contract.methods.removeLiquidity(
+          this.hardForkToken
+        ).send({ from: this.currentAccount });
+      } finally {
+        this.loading = false;
+      }
     },
   },
 };
