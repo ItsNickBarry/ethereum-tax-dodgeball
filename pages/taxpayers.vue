@@ -11,11 +11,35 @@
 
           <p>The use of the EthereumTaxDodgeball system may have tax implication for U.S. taxpayers.</p>
 
-          <p>Taxpayers may use this page to accept offers made to purchase their hard-forked-and-airdropped tokens.  They may also elect to opt out participation in the EthereumTaxDodgeball system.</p>
+          <p>Taxpayers may use this page to accept offers made to purchase their hard-forked-and-airdropped tokens.  They may also elect to opt out of participation in the EthereumTaxDodgeball system.</p>
 
-          <article v-show="disabled" class="message is-warning">
+          <article v-show="metamask && !metamaskConnected" class="message is-warning">
             <div class="message-header">
-              Warning: Contract Not Found
+              Ethereum Not Connected
+            </div>
+            <div class="message-body">
+              <p>Please connect your account to the Ethereum network.</p>
+
+              <button class="button is-info" @click="$parent.connectMetamask">
+                Connect
+              </button>
+            </div>
+          </article>
+
+          <article v-show="!metamask" class="message is-warning">
+            <div class="message-header">
+              Ethereum Not Found
+            </div>
+            <div class="message-body">
+              <p>This application is an Ethereum dapp, and requires an Ethereum-enabled browser.</p>
+
+              <p>The <a href="https://metamask.io/">Metamask</a> extension may be used for this purpose.</p>
+            </div>
+          </article>
+
+          <article v-show="disabled && metamaskConnected" class="message is-warning">
+            <div class="message-header">
+              Contract Not Found
             </div>
             <div class="message-body">
               <p>The EthereumTaxDodgeball contract is not known to have been deployed on the current network.</p>
@@ -152,8 +176,17 @@ export default {
   },
 
   computed: {
+    metamask: function () {
+      return this.$parent.metamask;
+    },
+
+    metamaskConnected: function () {
+      return this.$parent.metamaskConnected;
+    },
+
     disabled: function () {
-      return !this.$parent.contractAddress;
+      let metamaskConnected = this.metamaskConnected;
+      return !this.$parent.contractAddress || !metamaskConnected;
     },
 
     currentAccount: function () {

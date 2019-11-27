@@ -99,6 +99,9 @@ export default {
       currentAccount: null,
       devAddress: null,
 
+      metamask: false,
+      metamaskConnected: false,
+
       web3: null,
     };
   },
@@ -126,22 +129,25 @@ export default {
   },
 
   mounted: function () {
-    if (typeof global.ethereum === 'undefined') {
-      alert('An Ethereum client such as Metamask is required to use this site.');
-      return;
+    if (global.ethereum) {
+      this.metamask = true;
     }
-
-    this.updateAccount();
-    global.ethereum.on('accountsChanged', this.updateAccount);
-    this.updateNetwork();
-    global.ethereum.on('networkChanged', this.updateNetwork);
-
-    global.ethereum.enable();
-
-    this.web3 = new Web3(global.ethereum);
   },
 
   methods: {
+    connectMetamask: function () {
+      this.updateAccount();
+      global.ethereum.on('accountsChanged', this.updateAccount);
+      this.updateNetwork();
+      global.ethereum.on('networkChanged', this.updateNetwork);
+
+      global.ethereum.enable();
+
+      this.web3 = new Web3(global.ethereum);
+
+      this.metamaskConnected = true;
+    },
+
     updateAccount: function (accounts) {
       this.currentAccount = accounts && accounts[0] || global.ethereum.selectedAddress;
     },
