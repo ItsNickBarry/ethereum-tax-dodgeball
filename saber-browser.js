@@ -8,5 +8,8 @@ export default function (context) {
       { name: 'description', content: pkg.description },
       { name: 'keywords', content: pkg.keywords.join(', ') },
     ],
+    link: [
+      { rel: 'icon', type: 'image/png', href: 'images/favicon.ico' },
+    ],
   });
 }
