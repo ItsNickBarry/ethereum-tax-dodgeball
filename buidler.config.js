@@ -1,4 +1,5 @@
 usePlugin('@nomiclabs/buidler-truffle5');
+usePlugin('@nomiclabs/buidler-etherscan');
 usePlugin('buidler-gas-reporter');
 
 // This is a sample Buidler task. To learn how to create your own go to
@@ -29,6 +30,10 @@ module.exports = {
       enabled: true,
       runs: 200,
     },
+  },
+  etherscan: {
+    url: process.env.ETHERSCAN_URL || '',
+    apiKey: process.env.ETHERSCAN_KEY || '',
   },
   gasReporter: {
     currency: 'USD',

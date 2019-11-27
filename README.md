@@ -11,13 +11,20 @@ See the IRS guidance on this process [here](https://www.irs.gov/pub/irs-drop/rr-
 
 A [dapp](https://itsnickbarry.github.io/ethereum-tax-dodgeball) is available to interface with the smart contract.
 
+Contracts have been deployed by a non U.S. person at the following addresses:
+
+| network | address |
+|-|-|
+| Ethereum Mainnet | [0xe15dcc5Bce1AF8909e0250325221fb13b683660e](https://etherscan.io/address/0xe15dcc5bce1af8909e0250325221fb13b683660e) |
+| Ropsten Testnet | [0xFc1248A6Aff0d4d5400061367D441323eBEE3cB5](https://ropsten.etherscan.io/address/0xfc1248a6aff0d4d5400061367d441323ebee3cb5) |
+
 ## Opt-out
 
-A taxpayer with a healthy fear of the law may choose to opt out of participation.  Simply call the `optOut` function and include in the transaction a sum of ether greater than or equal to the opt-out fee (`getOptOutFee`).
+A taxpayer with a healthy fear of the law may choose to opt out of participation.  Simply call the `optOut` function and include in the transaction a sum of ether greater than or equal to the opt-out fee.
 
 ## Development
 
-Development and testing require that a local blockchain be run in a separate terminal window:
+Development and testing with the default network require that a local blockchain be run in a separate terminal window:
 
 ```bash
 yarn run ganache

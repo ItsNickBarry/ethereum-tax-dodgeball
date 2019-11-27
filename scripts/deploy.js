@@ -3,7 +3,11 @@ const fs = require('fs');
 async function main() {
   const EthereumTaxDodgeball = artifacts.require('EthereumTaxDodgeball');
 
-  const instance = await EthereumTaxDodgeball.new(`1${ '0'.repeat(17) }`);
+  // optional parameters
+  let gasPrice = process.env.GAS_PRICE;
+  let nonce = process.env.NONCE;
+
+  const instance = await EthereumTaxDodgeball.new(`1${ '0'.repeat(17) }`, { gasPrice, nonce });
   console.log(`EthereumTaxDodgeball deployed to ${ instance.address }`);
 
   let json = JSON.stringify({ address: instance.address });

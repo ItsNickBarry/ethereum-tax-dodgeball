@@ -73,10 +73,9 @@ const NETWORKS = {
 };
 
 const ADDRESSES = {
-  // TODO: store deployed contract addresses by network id
-  '1':  null,
+  '1':  '0xe15dcc5Bce1AF8909e0250325221fb13b683660e',
   '2':  null,
-  '3':  null,
+  '3':  '0xFc1248A6Aff0d4d5400061367D441323eBEE3cB5',
   '4':  null,
   '5':  null,
   '42': null,
