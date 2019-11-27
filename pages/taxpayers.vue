@@ -40,6 +40,16 @@
             </ol>
           </p>
 
+          <article v-show="errors.takeLiquidity" class="message is-danger">
+            <div class="message-header">
+              Ethereum Transaction Error
+              <button class="delete" aria-label="delete" @click="setError('takeLiquidity')" />
+            </div>
+            <div class="message-body">
+              {{ errors.takeLiquidity }}
+            </div>
+          </article>
+
           <form action="javascript:void(0);" @submit="takeLiquidity">
             <fieldset :disabled="disabled">
               <div class="field">
@@ -70,6 +80,16 @@
           <p v-show="isOptedOut">
             The current address has already opted out of the contract deployed on the current network.
           </p>
+
+          <article v-show="errors.optOut" class="message is-danger">
+            <div class="message-header">
+              Ethereum Transaction Error
+              <button class="delete" aria-label="delete" @click="setError('optOut')" />
+            </div>
+            <div class="message-body">
+              {{ errors.optOut }}
+            </div>
+          </article>
 
           <form action="javascript:void(0);" @submit="optOut">
             <fieldset :disabled="disabled || isOptedOut">
@@ -104,6 +124,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import { RippleLoader } from 'vue-spinners-css';
 
 const HARD_FORK_ABI = require('../static/abi/ERC20HardFork.json');
@@ -122,6 +143,11 @@ export default {
       isOptedOut: false,
 
       loading: false,
+
+      errors: {
+        takeLiquidity: null,
+        optOut: null,
+      },
     };
   },
 
@@ -168,7 +194,7 @@ export default {
         await this.hardForkContract.methods.increaseAllowance(this.contract.options.address, balance).send({ from: this.currentAccount });
         await this.contract.methods.takeLiquidity(this.hardForkAddress).send({ from: this.currentAccount });
       } catch (e) {
-        console.log(e.message);
+        this.setError('takeLiquidity', e.message);
       } finally {
         this.loading = false;
       }
@@ -181,7 +207,7 @@ export default {
         await this.contract.methods.optOut().send({ from: this.currentAccount, value: this.optOutFee });
         this.setIsOptedOut();
       } catch (e) {
-        console.log(e.message);
+        this.setError('optOut', e.message);
       } finally {
         this.loading = false;
       }
@@ -193,6 +219,10 @@ export default {
 
     setIsOptedOut: async function () {
       this.isOptedOut = await this.contract.methods.isOptedOut(this.currentAccount).call();
+    },
+
+    setError: function (name, value = null) {
+      Vue.set(this.errors, name, value);
     },
   },
 };

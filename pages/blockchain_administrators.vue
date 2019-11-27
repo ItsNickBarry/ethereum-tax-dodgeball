@@ -32,6 +32,16 @@
 
           <p>A prospective blockchain administrator may use the EthereumTaxDodgeball system for the purpose of deploying an ERC20 token contract.  This contract should be initialized with a list of two or more beneficiary U.S. taxpayer addresses.</p>
 
+          <article v-show="errors.deployToken" class="message is-danger">
+            <div class="message-header">
+              Ethereum Transaction Error
+              <button class="delete" aria-label="delete" @click="setError('deployToken')" />
+            </div>
+            <div class="message-body">
+              {{ errors.deployToken }}
+            </div>
+          </article>
+
           <form action="javascript:void(0);" @submit="deployToken">
             <fieldset :disabled="disabled">
               <div class="field">
@@ -78,6 +88,16 @@
 
           <p>An ERC20 token contract created through the EthereumTaxDodgeball system contains a provision which allows it to be paused and hard forked.  When a hard fork takes place, a new contract is created which maintains references to the holders of the preexisting token and their respective balances.</p>
 
+          <article v-show="errors.hardFork" class="message is-danger">
+            <div class="message-header">
+              Ethereum Transaction Error
+              <button class="delete" aria-label="delete" @click="setError('hardFork')" />
+            </div>
+            <div class="message-body">
+              {{ errors.hardFork }}
+            </div>
+          </article>
+
           <form action="javascript:void(0);" @submit="hardFork">
             <fieldset :disabled="disabled">
               <div class="field">
@@ -119,6 +139,16 @@
 
           <p>A taxpayer who has gained, and is aware of having gained, <i>dominion &amp; control</i> of said tokens following an airdrop may accept said offer until it is rescinded.</p>
 
+          <article v-show="errors.addLiquidity" class="message is-danger">
+            <div class="message-header">
+              Ethereum Transaction Error
+              <button class="delete" aria-label="delete" @click="setError('addLiquidity')" />
+            </div>
+            <div class="message-body">
+              {{ errors.addLiquidity }}
+            </div>
+          </article>
+
           <form action="javascript:void(0);" @submit="addLiquidity">
             <fieldset :disabled="disabled">
               <div class="field">
@@ -158,6 +188,16 @@
 
           <p>Token contracts which are created through a hard fork event via the EthereumTaxDodgeball system contain a provision to airdrop new tokens to holders of pre-hard-fork upstream tokens.  An airdrop effectively grants <i>dominion &amp; control</i> of tokens to taxpayers.</p>
 
+          <article v-show="errors.airdrop" class="message is-danger">
+            <div class="message-header">
+              Ethereum Transaction Error
+              <button class="delete" aria-label="delete" @click="setError('airdrop')" />
+            </div>
+            <div class="message-body">
+              {{ errors.airdrop }}
+            </div>
+          </article>
+
           <form action="javascript:void(0);" @submit="airdrop">
             <fieldset :disabled="disabled">
               <div class="field">
@@ -182,6 +222,16 @@
           </h2>
 
           <p>One who has made an offer to buy a sum of newly hard-forked tokens may, for whatever reason, provided the offer has not yet been taken, rescind said offer.  This action may affect the <i>fair market value</i> of said tokens.</p>
+
+          <article v-show="errors.removeLiquidity" class="message is-danger">
+            <div class="message-header">
+              Ethereum Transaction Error
+              <button class="delete" aria-label="delete" @click="setError('removeLiquidity')" />
+            </div>
+            <div class="message-body">
+              {{ errors.removeLiquidity }}
+            </div>
+          </article>
 
           <form action="javascript:void(0);" @submit="removeLiquidity">
             <fieldset :disabled="disabled">
@@ -216,6 +266,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import { RippleLoader } from 'vue-spinners-css';
 
 export const data = {
@@ -240,6 +291,14 @@ export default {
       volumeEther: 1,
 
       loading: false,
+
+      errors: {
+        deployToken: null,
+        hardFork: null,
+        addLiquidity: null,
+        airdrop: null,
+        removeLiquidity: null,
+      },
     };
   },
 
@@ -272,7 +331,7 @@ export default {
 
         this.sourceToken = tx.events.Deployment.returnValues.token;
       } catch (e) {
-        console.log(e.message);
+        this.setError('deployToken', e.message);
       } finally {
         this.loading = false;
       }
@@ -288,7 +347,7 @@ export default {
 
         this.hardForkToken = tx.events.HardFork.returnValues.token;
       } catch (e) {
-        console.log(e.message);
+        this.setError('hardFork', e.message);
       } finally {
         this.loading = false;
       }
@@ -302,7 +361,7 @@ export default {
           this.hardForkToken, this.supplyPerTaxpayer
         ).send({ from: this.currentAccount, value: String(Number(this.volumeEther) * Number(`1${ '0'.repeat(18) }`)) });
       } catch (e) {
-        console.log(e.message);
+        this.setError('addLiquidity', e.message);
       } finally {
         this.loading = false;
       }
@@ -316,7 +375,7 @@ export default {
           this.hardForkToken
         ).send({ from: this.currentAccount });
       } catch (e) {
-        console.log(e.message);
+        this.setError('airdrop', e.message);
       } finally {
         this.loading = false;
       }
@@ -330,10 +389,14 @@ export default {
           this.hardForkToken
         ).send({ from: this.currentAccount });
       } catch (e) {
-        console.log(e.message);
+        this.setError('removeLiquidity', e.message);
       } finally {
         this.loading = false;
       }
+    },
+
+    setError: function (name, value = null) {
+      Vue.set(this.errors, name, value);
     },
   },
 };
