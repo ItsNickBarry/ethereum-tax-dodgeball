@@ -108,7 +108,7 @@ export default {
 
   computed: {
     currentNetworkName: function () {
-      return NETWORKS[this.currentNetwork] || `Private Network (${ this.currentNetwork })` || 'Not Connected';
+      return NETWORKS[this.currentNetwork] || (this.currentNetwork ? `Private Network (${ this.currentNetwork })` : 'Not Connected');
     },
 
     currentAccountName: function () {
