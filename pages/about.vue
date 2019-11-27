@@ -25,8 +25,13 @@
             <li>Blue Dust &amp; Scratches by Nick Barry, derived from Green Dust &amp; Scratches</li>
             <li>Red Dust &amp; Scratches by Nick Barry, derived from Green Dust &amp; Scratches</li>
           </ul>
+
           <p>
             The webfonts used are Lusitana by Ana Paula Megda and Inconsolata by Raph Levien, released under <a href="http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web">OFL 1.1</a>.
+          </p>
+
+          <p>
+            The favicon is provided by <a href="https://github.com/gosquared/flags">GoSquared</a> under the <a href="https://opensource.org/licenses/MIT">MIT license</a>.
           </p>
 
           <p>
