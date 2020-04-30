@@ -13,11 +13,8 @@ task('accounts', 'Prints the list of accounts', async () => {
 });
 
 module.exports = {
-  defaultNetwork: 'ganache',
+  defaultNetwork: 'localhost',
   networks: {
-    ganache: {
-      url: 'http://127.0.0.1:8545',
-    },
     generic: {
       url: process.env.URL || '',
       accounts: {

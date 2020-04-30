@@ -47,7 +47,7 @@ yarn test
 To include a gas usage report:
 
 ```bash
-REPORT_GAS=true yarn test
+REPORT_GAS=true yarn test --network localhost
 ```
 
 One of the tests tends to fail, perhaps due to a race condition.  It's good enough for government work.

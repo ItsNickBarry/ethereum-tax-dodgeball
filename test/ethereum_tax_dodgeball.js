@@ -4,9 +4,6 @@ const EthereumTaxDodgeball = artifacts.require('EthereumTaxDodgeball');
 const ERC20Source = artifacts.require('ERC20Source');
 const ERC20HardFork = artifacts.require('ERC20HardFork');
 
-const ZERO_ADDRESS = '0'.repeat(40);
-// const ONE_ETHER = `1${ '0'.repeat(18) }`;
-
 // arbitrary values
 const OPT_OUT_FEE       = `2${ '0'.repeat(18) }`;
 const SUPPLY            = `3${ '0'.repeat(18) }`;
